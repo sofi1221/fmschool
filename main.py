@@ -12,8 +12,18 @@ app = Flask(__name__)
 app.config['SECRET_KEY'] = 'yandexlyceum_secret_key'
 
 def main():
+    db_session.global_init("db/fmschool.sqlite")
+    login_manager = LoginManager()
+    login_manager.init_app(app)
+
+    @login_manager.user_loader
     def load_user(user_id):
-        pass
+        session = db_session.create_session()
+        return session.query(User).get(user_id)
+
+    @app.route('/')
+    def index():
+        return render_template('index.html')
 
     def reqister():
         pass
