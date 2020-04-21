@@ -36,6 +36,12 @@ def main():
 
     def users():
         pass
+    
+    def edit_users():
+        pass
+    
+    def friends():
+        pass
 
 if __name__ == '__main__':
     main()
