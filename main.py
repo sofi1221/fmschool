@@ -28,6 +28,7 @@ def main():
     def reqister():
         pass
 
+    @app.route('/login', methods=['GET', 'POST'])
     def login():
         form = LoginForm()
         if form.validate_on_submit():
@@ -41,6 +42,8 @@ def main():
                                    form=form)
         return render_template('login.html', form=form)
 
+    @app.route('/logout')
+    @login_required
     def logout():
         logout_user()
         return redirect("/")
