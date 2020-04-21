@@ -11,5 +11,8 @@ def main():
     def logout():
         pass
 
+    def users():
+        pass
+
 if __name__ == '__main__':
     main()
