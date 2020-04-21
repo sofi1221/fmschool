@@ -28,11 +28,25 @@ def main():
     def reqister():
         pass
 
+    @app.route('/login', methods=['GET', 'POST'])
     def login():
-        pass
+        form = LoginForm()
+        if form.validate_on_submit():
+            session = db_session.create_session()
+            user = session.query(User).filter(User.email == form.email.data).first()
+            if user and user.check_password(form.password.data):
+                login_user(user, remember=form.remember_me.data)
+                return redirect("/")
+            return render_template('login.html',
+                                   message="Неправильный логин или пароль",
+                                   form=form)
+        return render_template('login.html', form=form)
 
+    @app.route('/logout')
+    @login_required
     def logout():
-        pass
+        logout_user()
+        return redirect("/")
 
     def users():
         pass
