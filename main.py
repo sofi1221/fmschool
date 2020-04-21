@@ -42,7 +42,8 @@ def main():
         return render_template('login.html', form=form)
 
     def logout():
-        pass
+        logout_user()
+        return redirect("/")
 
     def users():
         pass
