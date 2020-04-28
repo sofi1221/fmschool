@@ -1,0 +1,105 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link rel="stylesheet"
+          href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
+          integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh"
+          crossorigin="anonymous">
+    <style type="text/css">
+    body {
+    background-image: url(https://luxfon.com/images/201303/luxfon.com_19835.jpg);
+    background-size: cover;
+    background-attachment: fixed;
+    margin: 0;
+
+   }
+   #head { /* Верхний блок */
+    padding: 0px; /* Поля вокруг */
+    position: fixed;
+    width: 100%;
+    margin-top: -100px;
+   }
+   #head a {
+   font-size: 20pt;
+   }
+   #menu { /* Левая колонка */
+    float: left; /* Обтекание справа */
+    border: 1px solid #333; /* Параметры рамки вокруг */
+    width: 18%; /* Ширина колонки */
+    padding: 5px; /* Поля вокруг текста */
+    margin: 10px 10px 20px 5px; /* Значения отступов */
+    position: fixed;
+    background: rgba(51, 204, 119, 0.8);;
+    border-radius: 10px;
+   }
+   #menu div {
+    padding: 5px; /* Поля вокруг ссылок */
+   }
+   #menu a {
+    display: block; /* Отображать ссылку как блок */
+    padding: 2px; /* Поля вокруг ссылок */
+    margin: 1px; /* Отступы вокруг */
+    font-size: 14pt; /* Размер текста */
+    text-decoration: none; /* Убираем подчеркивание текста */
+    color: #eeeeee;
+   }
+   #menu a:hover {
+    background: #ccffcc; /* Цвет фона */
+    border: 2px #ccffcc; /* Добавление пунктирной рамки */
+    margin: 1; /* Убираем поля */
+    border-radius: 5px;
+    color: #575757;
+   }
+   #content { /* Правая колонка */
+    margin: 10px 5px 20px 30%; /* Значения отступов */
+    padding: 10px; /* Поля вокруг текста */
+    margin-top: 100px;
+    color: #eeeeee;
+    background: rgba(44, 44, 44, 0.6);
+    border-radius: 10px;
+   }
+    .line {
+    border-bottom: 2px groove #999; /* Линия между ссылками */
+   }
+
+
+    </style>
+    <title>{{title}}</title>
+</head>
+<body>
+<header id="head">
+    <nav class="navbar navbar-dark" style="background-color: #33cc77;">
+        <a class="navbar-brand" href="/" style="font-size: 24pt;">
+            <img src="../static/img/i01_logo.png" width="50" height="50"
+                 class="d-inline-block align-top" alt="">
+            fmschool72</a>
+        {% if current_user.is_authenticated %}
+        <a class="navbar-brand" href="/user/{{current_user.id}}">{{ current_user.name }} {{ current_user.surname
+            }}</a>
+        {% else %}
+        <p>
+            <a class="btn btn-outline-light" href="/register" style="font-size: 16pt;">Зарегистрироваться</a>
+            <a class="btn btn-outline-light" href="/login" style="font-size: 16pt;">Войти</a>
+        </p>
+        {% endif %}
+    </nav>
+
+</header>
+<!-- Begin page content -->
+<main role="main" class="container">
+    <div id="menu">
+        <div><a href="/">Новости</a></div>
+        <div><a href="/">Сообщения</a></div>
+        <div><a href="/follows">Подписки</a></div>
+        <div class="line"></div>
+        <div><a href="/">Чат-бот ВК</a></div>
+        <div><a href="/">Пригласить друзей</a></div>
+
+    </div>
+    <div id="content">{% block content %}{% endblock %}</div>
+
+</main>
+</body>
+</html>
