@@ -89,16 +89,22 @@
 </header>
 <!-- Begin page content -->
 <main role="main" class="container">
+    {%if current_user.is_authenticated or xxx == 1%}
     <div id="menu">
         <div><a href="/">Новости</a></div>
         <div><a href="/">Сообщения</a></div>
-        <div><a href="/follows">Подписки</a></div>
+        {%if current_user.is_authenticated%}
+        <div><a href="/follows/{{current_user.id}}">Подписки</a></div>
+        {% endif %}
         <div class="line"></div>
         <div><a href="/">Чат-бот ВК</a></div>
         <div><a href="/">Пригласить друзей</a></div>
 
     </div>
     <div id="content">{% block content %}{% endblock %}</div>
+    {%else%}
+    <h1 align="center" style="color: #eeeeee; margin-top: 100px;">Необходимо войти в систему для просмотра контента</h1>
+    {% endif %}
 
 </main>
 </body>
