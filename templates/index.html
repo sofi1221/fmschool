@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Сообщения</title>
+    <link rel="icon"
+          href="https://psv4.userapi.com/c856436/u295164923/docs/d11/53c945b3c74e/logo.png?extra=9t5Eqcb53dm-Rc64VfcOw9hxWVZe6C2H1tDPgL4AjV6NBW0sXEoNFS6raT1JWApEqCxGxF0SlUya91rDa2WDza__xEOWhlk_kFV4bFuBBVOyc2r_dPTDg1OsIYq2plrRlVPAYdxkW3fNpk1Za6iQkqg"
+          type="image/x-icon">
+    <style type="text/css">
+        .news {
+            background: rgba(87, 87, 87, 0.8);
+            color: #eeeeee;
+            border-radius: 10px;
+            padding: 15px; /* Значения отступов */
+            margin: 15px;
+        }
+        .news img {
+            width: 85%;
+            height: 85%;
+        }
+
+
+
+
+
+    </style>
+</head>
+
+<body>
+{% extends "base.html" %}
+{% block content %}
+
+<div align="center">
+    {%for i in m %}
+    <a href="/messages/{{i.id}}#end"><div class="news">
+        <img align="left" src="{{x[loop.index - 1].photo_url}}"
+             style="margin-left: 20px; width: 10%; height: 10%; margin-right: 2%; margin-bottom: 2%;  border-radius: 50%;"/>
+        <div align="left">
+            <h4 align="left" style="margin-top: 2%;"><a href="/user/{{x[loop.index - 1].id}}"
+                                                        style="color: #eeeeee;">{{x[loop.index - 1].name}}
+                {{x[loop.index - 1].surname}}</a></h4>
+            <div style="background: rgba(44, 44, 44, 0.8); margin: 5px; border-radius: 10px; padding: 5px; padding-left: 20px;;">
+            {{i.last}}</div>
+        </div>
+    </div></a>
+    {%endfor%}
+
+</div>
+
+{% endblock %}
+</body>
+</html>
