@@ -88,7 +88,59 @@ def main():
         arr = [int(x) for x in current_user.follow.split(',')[1:]]
         return render_template('user.html', user=user, xxx=0, arr=arr)
 
+    @app.route('/info/<int:id>', methods=['GET', 'POST'])
+    @login_required
+    def edit_user(id):
+        form = InfoForm()
+        if request.method == "GET":
+            session = db_session.create_session()
+            job = session.query(User).filter(User.id == id).first()
+            if job:
+                form.name.data = job.name
+                form.surname.data = job.surname
+                form.email.data = job.email
+                form.position.data = job.position
+                form.phone.data = job.phone
+                form.school_year.data = job.school_year
+                form.liter.data = job.liter
+                form.profile.data = job.profile
+                form.photo_url.data = job.photo_url
+            else:
+                abort(404)
+        if form.validate_on_submit():
+            session = db_session.create_session()
+            job = session.query(User).filter(User.id == id).first()
+            if job:
+                job.name = form.name.data
+                job.surname = form.surname.data
+                job.email = form.email.data
+                job.position = form.position.data
+                job.phone = form.phone.data
+                job.school_year = form.school_year.data
+                job.liter = form.liter.data
+                job.profile = form.profile.data
+                job.photo_url = form.photo_url.data
+                session.commit()
+                return redirect('/user/' + str(id))
+            else:
+                abort(404)
+        return render_template('info.html', form=form, xxx=0)
 
+    @app.route('/follows/<int:id>')
+    @login_required
+    def friends(id):
+        session = db_session.create_session()
+        f = session.query(User).all()
+        u = session.query(User).filter(User.id == id).first()
+        arr_self = []
+        arr_other = []
+        for i in f:
+            if str(i.id) in u.follow.split(','):
+                arr_self += [i.id]
+            if str(u.id) in i.follow.split(','):
+                arr_other += [i.id]
+        # print(arr_other, arr_self)
+        return render_template('friends.html', friends=f, xxx=0, arr_self=arr_self, arr_other=arr_other)
 
 if __name__ == '__main__':
     main()
