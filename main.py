@@ -142,5 +142,39 @@ def main():
         # print(arr_other, arr_self)
         return render_template('friends.html', friends=f, xxx=0, arr_self=arr_self, arr_other=arr_other)
 
+    @app.route('/to_follow/<int:id_self>/<int:id_other>', methods=['GET', 'POST'])
+    @login_required
+    def follow(id_self, id_other):
+        session = db_session.create_session()
+        f = session.query(User).filter(User.id == id_self).first()
+        f.follow = f.follow + ',' + str(id_other)
+        session.commit()
+        return redirect('/follows/' + str(id_self))
+
+    @app.route('/from_follow/<int:id_self>/<int:id_other>', methods=['GET', 'POST'])
+    @login_required
+    def unfollow(id_self, id_other):
+        session = db_session.create_session()
+        f = session.query(User).filter(User.id == id_self).first()
+        f.follow = f.follow.split(',' + str(id_other))[0] + f.follow.split(',' + str(id_other))[-1]
+        session.commit()
+        return redirect('/follows/' + str(id_self))
+
+    @app.route('/like/<int:id_self>/<int:id_news>', methods=['GET', 'POST'])
+    @login_required
+    def like(id_self, id_news):
+        session = db_session.create_session()
+        f = session.query(News).filter(News.id == id_news).first()
+        if str(id_self) in f.ids.split(','):
+            f.ids = f.ids.split(',' + str(id_self))[0] + f.ids.split(',' + str(id_self))[-1]
+            f.likes -= 1
+        else:
+            f.ids = f.ids + ',' + str(id_self)
+            f.likes += 1
+        session.commit()
+        return redirect('/#id_' + str(id_news))
+    app.run()
+
+
 if __name__ == '__main__':
     main()
