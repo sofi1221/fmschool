@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>{{user.name}} {{user.surname}}</title>
+    <style type="text/css">
+        .main {
+            background: rgba(87, 87, 87, 0.8);;
+            color: #eeeeee;
+            border-radius: 10px;
+            padding: 15px; /* Значения отступов */
+            margin: 15px;
+            height: 320px;
+        }
+        .main img {
+            width: 40%;
+            height: 40%;
+            padding: 20px;
+        }
+
+    </style>
+</head>
+
+<body>
+{% extends "base.html" %}
+{% block content %}
+
+<h1 align="center">{{user.name}} {{user.surname}}</h1>
+
+
+<div align="center">
+    <div class="main">
+        <div>
+            <img src="{{user.photo_url}}" align="left"/>
+        </div>
+        <div align="left" style="padding: 10px; margil-left: 20px; font-size: 16pt;">
+            {% if user.email != None %}
+            <div>Email: {{user.email}}</div>
+            {% endif %}
+            {% if user.position != None %}
+            <div>Position: {{user.position}}</div>
+            {% endif %}
+            {% if user.school_year != None %}
+            <div>Class: {{user.school_year}}{% if user.liter != None %}.{{user.liter}}{% endif %}</div>
+            {% endif %}
+            {% if user.profile != None %}
+            <div>Profile: {{user.profile}}</div>
+            {% endif %}
+            {% if user.id == current_user.id %}
+            <p></p>
+            <a href="/logout" class="btn btn-outline-light" style="font-size: 16pt;">Logout</a>
+            <a href="/info/{{user.id}}" class="btn btn-outline-light"
+               style="font-size: 16pt;">Edit</a>
+            {% else %}
+            <p></p>
+            <a href="/" class="btn btn-outline-light" style="font-size: 16pt;">Post message</a>
+            <a href="/friends" class="btn btn-outline-light" style="font-size: 16pt;">Follow</a>
+            {% endif %}
+        </div>
+    </div>
+</div>
+
+{% endblock %}
+</body>
+</html>
