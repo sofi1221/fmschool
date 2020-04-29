@@ -4,10 +4,12 @@ from werkzeug.exceptions import abort
 from werkzeug.utils import redirect
 from flask import render_template, Flask, request
 import users_api
+import base64
 from flask_login import current_user
 
 from WEB.data import db_session
-from WEB.data.users import User, RegisterForm, LoginForm, InfoForm, News
+from WEB.data.users import User, RegisterForm, LoginForm, InfoForm, News, AddNews, Messages, \
+    SendMessage, Groups
 
 app = Flask(__name__)
 app.config['SECRET_KEY'] = 'yandexlyceum_secret_key'
@@ -53,7 +55,9 @@ def main():
                 email=form.email.data,
                 phone=form.phone.data,
                 photo_url="https://ramcotubular.com/wp-content/uploads/default-avatar.jpg",
-                follow=""
+                follow="",
+                messages_ids='',
+                chat_with=''
             )
             user.set_password(form.password.data)
             session.add(user)
@@ -85,8 +89,13 @@ def main():
     def users(user_id):
         session = db_session.create_session()
         user = session.query(User).get(user_id)
-        arr = [int(x) for x in current_user.follow.split(',')[1:]]
-        return render_template('user.html', user=user, xxx=0, arr=arr)
+        arr1 = [int(x) for x in current_user.follow.split(',')[1:]]
+        news = session.query(News).filter(News.user_id == user_id).all()
+        news.reverse()
+        arr = []
+        for i in news:
+            arr += [[int(x) for x in i.ids.split(',')[1:]]]
+        return render_template('user.html', user=user, xxx=0, arr=arr, arr1=arr1, news=news)
 
     @app.route('/info/<int:id>', methods=['GET', 'POST'])
     @login_required
@@ -140,7 +149,8 @@ def main():
             if str(u.id) in i.follow.split(','):
                 arr_other += [i.id]
         # print(arr_other, arr_self)
-        return render_template('friends.html', friends=f, xxx=0, arr_self=arr_self, arr_other=arr_other)
+        return render_template('friends.html', friends=f, xxx=0, arr_self=arr_self,
+                               arr_other=arr_other)
 
     @app.route('/to_follow/<int:id_self>/<int:id_other>', methods=['GET', 'POST'])
     @login_required
@@ -173,9 +183,133 @@ def main():
             f.likes += 1
         session.commit()
         return redirect('/#id_' + str(id_news))
+
+    @app.route('/news_delete/<int:id>', methods=['GET', 'POST'])
+    @login_required
+    def news_delete(id):
+        session = db_session.create_session()
+        job = session.query(News).filter(News.id == id).first()
+        if job:
+            session.delete(job)
+            session.commit()
+        else:
+            # print(111)
+            abort(404)
+        return redirect('/user/' + str(current_user.id))
+
+    @app.route('/add_news', methods=['GET', 'POST'])
+    @login_required
+    def add_news():
+        form = AddNews()
+        if form.validate_on_submit():
+            session = db_session.create_session()
+            job = News(
+                text=form.text.data,
+                user_id=current_user.id,
+                img_url=form.img_url.data,
+                likes=0,
+                ids=''
+            )
+            session.add(job)
+            session.commit()
+            return redirect('/')
+        return render_template('add_news.html', form=form)
+
+    @app.route('/news_edit/<int:id>', methods=['GET', 'POST'])
+    @login_required
+    def edit_news(id):
+        form = AddNews()
+        if request.method == "GET":
+            session = db_session.create_session()
+            job = session.query(News).filter(News.id == id).first()
+            if job:
+                form.text.data = job.text
+                form.img_url.data = job.img_url
+            else:
+                abort(404)
+        if form.validate_on_submit():
+            session = db_session.create_session()
+            job = session.query(News).filter(News.id == id).first()
+            if job:
+                job.text = form.text.data
+                job.img_url = form.img_url.data
+                session.commit()
+                return redirect('/user/' + str(current_user.id))
+            else:
+                abort(404)
+        return render_template('add_news.html', form=form)
+
+    @app.route('/messages/<int:id>', methods=['GET', 'POST'])
+    @login_required
+    def messages(id):
+        form = SendMessage()
+
+        if form.validate_on_submit():
+            session = db_session.create_session()
+            job = Messages(
+                text=form.text.data,
+                user_from=current_user.id
+            )
+            session.add(job)
+            session.commit()
+
+            session = db_session.create_session()
+            g = session.query(Groups).get(id)
+            g.messages += ',' + str(session.query(Messages).all()[-1].id)
+            s = form.text.data
+            if len(s) >= 50:
+                s = s[:47] + '...'
+            g.last = s
+            session.commit()
+            form.text.data = ''
+        session = db_session.create_session()
+        g = session.query(Groups).get(id)
+        arr = g.messages.split(',')[1:]
+        session = db_session.create_session()
+        f = [session.query(Messages).get(int(x)) for x in arr]
+        return render_template('messages.html', messages=f, xxx=0, form=form)
+
+    @app.route('/messages')
+    @login_required
+    def messages_g():
+        session = db_session.create_session()
+        arr = [int(x) for x in session.query(User).get(current_user.id).messages_ids.split(',')[1:]]
+        m = [session.query(Groups).get(x) for x in arr]
+        x = [[session.query(User).get(int(y)) for y in x.users.split(',')[1:] if
+              y != str(current_user.id)][0] for x in m]
+        return render_template('groups.html', xxx=0, m=m, x=x)
+
+    @app.route('/is_message/<int:id>')
+    @login_required
+    def messages_is(id):
+        session = db_session.create_session()
+        other = session.query(User).get(id)
+        arr = [int(x) for x in session.query(User).get(current_user.id).chat_with.split(',')[1:]]
+        if other.id in arr:
+            return redirect('/messages')
+        else:
+            me = session.query(User).get(current_user.id)
+            me.chat_with += ',' + str(id)
+            session.commit()
+            group = Groups(
+                messages='',
+                users=f',{current_user.id},{id}',
+                last='No messages'
+            )
+            session.add(group)
+            session.commit()
+            m = session.query(Groups).all()
+            m1 = [x.id for x in m]
+            me = session.query(User).get(current_user.id)
+            me.messages_ids += ',' + str(m1[-1])
+            session.commit()
+            me = session.query(User).get(id)
+            me.messages_ids += ',' + str(m1[-1])
+            session.commit()
+            return redirect('/messages')
+
     app.run()
 
 
 if __name__ == '__main__':
     main()
-    print("Process finished with exit code 0")
