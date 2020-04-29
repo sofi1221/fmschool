@@ -4,10 +4,12 @@ from werkzeug.exceptions import abort
 from werkzeug.utils import redirect
 from flask import render_template, Flask, request
 import users_api
+import base64
 from flask_login import current_user
 
 from WEB.data import db_session
-from WEB.data.users import User, RegisterForm, LoginForm, InfoForm, News, AddNews
+from WEB.data.users import User, RegisterForm, LoginForm, InfoForm, News, AddNews, Messages, \
+    SendMessage, Groups
 
 app = Flask(__name__)
 app.config['SECRET_KEY'] = 'yandexlyceum_secret_key'
@@ -53,7 +55,9 @@ def main():
                 email=form.email.data,
                 phone=form.phone.data,
                 photo_url="https://ramcotubular.com/wp-content/uploads/default-avatar.jpg",
-                follow=""
+                follow="",
+                messages_ids='',
+                chat_with=''
             )
             user.set_password(form.password.data)
             session.add(user)
@@ -235,8 +239,78 @@ def main():
                 abort(404)
         return render_template('add_news.html', form=form)
 
+    @app.route('/messages/<int:id>', methods=['GET', 'POST'])
+    @login_required
+    def messages(id):
+        form = SendMessage()
+
+        if form.validate_on_submit():
+            session = db_session.create_session()
+            job = Messages(
+                text=form.text.data,
+                user_from=current_user.id
+            )
+            session.add(job)
+            session.commit()
+
+            session = db_session.create_session()
+            g = session.query(Groups).get(id)
+            g.messages += ',' + str(session.query(Messages).all()[-1].id)
+            s = form.text.data
+            if len(s) >= 50:
+                s = s[:47] + '...'
+            g.last = s
+            session.commit()
+            form.text.data = ''
+        session = db_session.create_session()
+        g = session.query(Groups).get(id)
+        arr = g.messages.split(',')[1:]
+        session = db_session.create_session()
+        f = [session.query(Messages).get(int(x)) for x in arr]
+        return render_template('messages.html', messages=f, xxx=0, form=form)
+
+    @app.route('/messages')
+    @login_required
+    def messages_g():
+        session = db_session.create_session()
+        arr = [int(x) for x in session.query(User).get(current_user.id).messages_ids.split(',')[1:]]
+        m = [session.query(Groups).get(x) for x in arr]
+        x = [[session.query(User).get(int(y)) for y in x.users.split(',')[1:] if
+              y != str(current_user.id)][0] for x in m]
+        return render_template('groups.html', xxx=0, m=m, x=x)
+
+    @app.route('/is_message/<int:id>')
+    @login_required
+    def messages_is(id):
+        session = db_session.create_session()
+        other = session.query(User).get(id)
+        arr = [int(x) for x in session.query(User).get(current_user.id).chat_with.split(',')[1:]]
+        if other.id in arr:
+            return redirect('/messages')
+        else:
+            me = session.query(User).get(current_user.id)
+            me.chat_with += ',' + str(id)
+            session.commit()
+            group = Groups(
+                messages='',
+                users=f',{current_user.id},{id}',
+                last='No messages'
+            )
+            session.add(group)
+            session.commit()
+            m = session.query(Groups).all()
+            m1 = [x.id for x in m]
+            me = session.query(User).get(current_user.id)
+            me.messages_ids += ',' + str(m1[-1])
+            session.commit()
+            me = session.query(User).get(id)
+            me.messages_ids += ',' + str(m1[-1])
+            session.commit()
+            return redirect('/messages')
+
     app.run()
 
 
 if __name__ == '__main__':
     main()
+    print("Process finished with exit code 0")
