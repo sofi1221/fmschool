@@ -178,3 +178,4 @@ def main():
 
 if __name__ == '__main__':
     main()
+    print("Process finished with exit code 0")
