@@ -2,6 +2,8 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
+        <link rel="icon" href="https://psv4.userapi.com/c856436/u295164923/docs/d11/53c945b3c74e/logo.png?extra=9t5Eqcb53dm-Rc64VfcOw9hxWVZe6C2H1tDPgL4AjV6NBW0sXEoNFS6raT1JWApEqCxGxF0SlUya91rDa2WDza__xEOWhlk_kFV4bFuBBVOyc2r_dPTDg1OsIYq2plrRlVPAYdxkW3fNpk1Za6iQkqg" type="image/x-icon">
+
     <title>{{user.name}} {{user.surname}}</title>
     <style type="text/css">
         .main {
@@ -17,6 +19,19 @@
             height: 40%;
             padding: 20px;
         }
+        .news {
+            background: rgba(87, 87, 87, 0.8);;
+            color: #eeeeee;
+            border-radius: 10px;
+            padding: 15px; /* Значения отступов */
+            margin: 15px;
+        }
+        .news img {
+            width: 85%;
+            height: 85%;
+        }
+
+
 
     </style>
 </head>
@@ -38,26 +53,71 @@
             <div>Email: {{user.email}}</div>
             {% endif %}
             {% if user.position != None %}
-            <div>Position: {{user.position}}</div>
+            <div>Должность: {{user.position}}</div>
             {% endif %}
             {% if user.school_year != None %}
-            <div>Class: {{user.school_year}}{% if user.liter != None %}.{{user.liter}}{% endif %}</div>
+            <div>Класс: {{user.school_year}}{% if user.liter != None %}.{{user.liter}}{% endif %}
+            </div>
             {% endif %}
             {% if user.profile != None %}
-            <div>Profile: {{user.profile}}</div>
+            <div>Профиль: {{user.profile}}</div>
             {% endif %}
             {% if user.id == current_user.id %}
             <p></p>
-            <a href="/logout" class="btn btn-outline-light" style="font-size: 16pt;">Logout</a>
+            <a href="/logout" class="btn btn-outline-light" style="font-size: 16pt;">Выйти</a>
             <a href="/info/{{user.id}}" class="btn btn-outline-light"
-               style="font-size: 16pt;">Edit</a>
+               style="font-size: 16pt;">Редактировать</a>
             {% else %}
             <p></p>
-            <a href="/" class="btn btn-outline-light" style="font-size: 16pt;">Post message</a>
-            <a href="/friends" class="btn btn-outline-light" style="font-size: 16pt;">Follow</a>
+            <a href="/is_message/{{user.id}}" class="btn btn-outline-light" style="font-size: 16pt;">Написать</a>
+            {%if user.id in arr1%}
+            <a href="/from_follow/{{current_user.id}}/{{user.id}}" class="btn btn-outline-light"
+               style="font-size: 16pt;">Отписаться</a>
+            {% else %}
+            <a href="/to_follow/{{current_user.id}}/{{user.id}}" class="btn btn-outline-light"
+               style="font-size: 16pt;">Подписаться</a>
+            {% endif %}
             {% endif %}
         </div>
     </div>
+    <h1 align="center">Записи</h1>
+        {%for i in news%}
+        <a name="id_{{i.id}}" style="padding-bottom: 100px;"></a>
+        <div class="news">
+            <img align="left" src="{{i.user.photo_url}}"
+                 style="margin-left: 8%; width: 10%; height: 10%; margin-right: 2%; margin-bottom: 2%; border-radius: 50%;"/>
+
+            {%if i.user.id == current_user.id%}
+            <div align="left">
+                <h2 align="left"><a href="/user/{{i.user.id}}"
+                                    style="color: #eeeeee;">{{i.user.name}}
+                    {{i.user.surname}}</a></h2>
+                <a href="/news_delete/{{i.id}}"
+                   style="color: #eeeeee; margin-right: 2%;">Удалить</a>
+                <a href="/news_edit/{{i.id}}" style="color: #eeeeee;">Редактировать</a>
+            </div>
+            {%else%}
+            <div align="left">
+                <h2 align="left" style="margin-top: 2%;"><a href="/user/{{i.user.id}}"
+                                                            style="color: #eeeeee;">{{i.user.name}}
+                    {{i.user.surname}}</a></h2>
+            </div>
+            {%endif%}
+            <p></p>
+            <img src="{{i.img_url}}"/>
+            <p></p>
+            <p align="left" style="margin-left: 8%; font-size: 16pt;">{{i.text}}</p>
+            <div align="left" style="margin-left: 8%; margin-top: 10px;">
+                {%if current_user.id in arr[loop.index - 1]%}
+                <a href="/like/{{current_user.id}}/{{i.id}}" class="btn btn-outline-light">♥
+                    {{i.likes}}</a>
+                {%else%}
+                <a href="/like/{{current_user.id}}/{{i.id}}" class="btn btn-outline-light">♡
+                    {{i.likes}}</a>
+                {%endif%}
+            </div>
+        </div>
+        {%endfor%}
 </div>
 
 {% endblock %}
