@@ -7,7 +7,7 @@ import users_api
 from flask_login import current_user
 
 from WEB.data import db_session
-from WEB.data.users import User, RegisterForm, LoginForm, InfoForm, News
+from WEB.data.users import User, RegisterForm, LoginForm, InfoForm, News, AddNews
 
 app = Flask(__name__)
 app.config['SECRET_KEY'] = 'yandexlyceum_secret_key'
@@ -85,8 +85,13 @@ def main():
     def users(user_id):
         session = db_session.create_session()
         user = session.query(User).get(user_id)
-        arr = [int(x) for x in current_user.follow.split(',')[1:]]
-        return render_template('user.html', user=user, xxx=0, arr=arr)
+        arr1 = [int(x) for x in current_user.follow.split(',')[1:]]
+        news = session.query(News).filter(News.user_id == user_id).all()
+        news.reverse()
+        arr = []
+        for i in news:
+            arr += [[int(x) for x in i.ids.split(',')[1:]]]
+        return render_template('user.html', user=user, xxx=0, arr=arr, arr1=arr1, news=news)
 
     @app.route('/info/<int:id>', methods=['GET', 'POST'])
     @login_required
@@ -140,7 +145,8 @@ def main():
             if str(u.id) in i.follow.split(','):
                 arr_other += [i.id]
         # print(arr_other, arr_self)
-        return render_template('friends.html', friends=f, xxx=0, arr_self=arr_self, arr_other=arr_other)
+        return render_template('friends.html', friends=f, xxx=0, arr_self=arr_self,
+                               arr_other=arr_other)
 
     @app.route('/to_follow/<int:id_self>/<int:id_other>', methods=['GET', 'POST'])
     @login_required
@@ -173,6 +179,62 @@ def main():
             f.likes += 1
         session.commit()
         return redirect('/#id_' + str(id_news))
+
+    @app.route('/news_delete/<int:id>', methods=['GET', 'POST'])
+    @login_required
+    def news_delete(id):
+        session = db_session.create_session()
+        job = session.query(News).filter(News.id == id).first()
+        if job:
+            session.delete(job)
+            session.commit()
+        else:
+            # print(111)
+            abort(404)
+        return redirect('/user/' + str(current_user.id))
+
+    @app.route('/add_news', methods=['GET', 'POST'])
+    @login_required
+    def add_news():
+        form = AddNews()
+        if form.validate_on_submit():
+            session = db_session.create_session()
+            job = News(
+                text=form.text.data,
+                user_id=current_user.id,
+                img_url=form.img_url.data,
+                likes=0,
+                ids=''
+            )
+            session.add(job)
+            session.commit()
+            return redirect('/')
+        return render_template('add_news.html', form=form)
+
+    @app.route('/news_edit/<int:id>', methods=['GET', 'POST'])
+    @login_required
+    def edit_news(id):
+        form = AddNews()
+        if request.method == "GET":
+            session = db_session.create_session()
+            job = session.query(News).filter(News.id == id).first()
+            if job:
+                form.text.data = job.text
+                form.img_url.data = job.img_url
+            else:
+                abort(404)
+        if form.validate_on_submit():
+            session = db_session.create_session()
+            job = session.query(News).filter(News.id == id).first()
+            if job:
+                job.text = form.text.data
+                job.img_url = form.img_url.data
+                session.commit()
+                return redirect('/user/' + str(current_user.id))
+            else:
+                abort(404)
+        return render_template('add_news.html', form=form)
+
     app.run()
 
 
