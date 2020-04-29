@@ -2,7 +2,9 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Follows</title>
+        <link rel="icon" href="https://psv4.userapi.com/c856436/u295164923/docs/d11/53c945b3c74e/logo.png?extra=9t5Eqcb53dm-Rc64VfcOw9hxWVZe6C2H1tDPgL4AjV6NBW0sXEoNFS6raT1JWApEqCxGxF0SlUya91rDa2WDza__xEOWhlk_kFV4bFuBBVOyc2r_dPTDg1OsIYq2plrRlVPAYdxkW3fNpk1Za6iQkqg" type="image/x-icon">
+
+    <title>Подписки</title>
     <style type="text/css">
         .main {
             background: rgba(87, 87, 87, 0.8);;
@@ -45,7 +47,7 @@
 {% extends "base.html" %}
 {% block content %}
 <div align="center">
-    <h1 align="center">My profile</h1>
+    <h1 align="center">Мой профиль</h1>
     <div class="main1">
         <img src="{{current_user.photo_url}}" align="left"/>
     </div>
@@ -53,15 +55,16 @@
             <a href="/user/{{current_user.id}}" style="margin-left: 20px; color: #eeeeee;">{{current_user.name}}
                 {{current_user.surname}}</a>
             <p></p>
-            <a href="/logout" class="btn btn-outline-light" style="margin-left: 20px;">Logout</a>
-            <a href="/info/{{current_user.id}}" class="btn btn-outline-light">Edit</a>
+            <a href="/logout" class="btn btn-outline-light" style="margin-left: 20px;">Выйти</a>
+            <a href="/info/{{current_user.id}}" class="btn btn-outline-light">Редактировать</a>
 
         </div>
 </div>
 <p></p>
 <div align="left" style="width: 49%; float: left; margin-top: 25px;" class="f">
-    <h1 align="center">Follows</h1>
+    <h1 align="center">Подписки</h1>
     {% for f in friends %}
+    {% if f.id in arr_self%}
     <div class="main" align="left">
         <div>
             <img src="{{f.photo_url}}" align="left"/>
@@ -69,22 +72,20 @@
         <div align="left" style="margin-left: 20px; font-size: 16pt;">
             <a href="/user/{{f.id}}" style="margin-left: 20px; color: #eeeeee;">{{f.name}}
                 {{f.surname}}</a>
-            {% if f.id == current_user.id %}
+
             <p></p>
-            <a href="/logout" class="btn btn-outline-light" style="margin-left: 20px;">Logout</a>
-            <a href="/info/{{f.id}}" class="btn btn-outline-light">Edit</a>
-            {% else %}
-            <p></p>
-            <a href="/" class="btn btn-outline-light" style="margin-left: 20px;">Message</a>
-            <a href="/friends" class="btn btn-outline-light">Follow</a>
-            {% endif %}
+            <a href="/" class="btn btn-outline-light" style="margin-left: 20px;">Написать</a>
+            <a href="/from_follow/{{current_user.id}}/{{f.id}}" class="btn btn-outline-light">Отписаться</a>
+
         </div>
     </div>
+    {% endif %}
     {% endfor %}
 </div>
 <div align="right" style="width: 49%; float: right; margin-top: 25px;" class="f">
-    <h1 align="center">Followings</h1>
+    <h1 align="center">Подписчики</h1>
     {% for f in friends %}
+    {% if f.id in arr_other%}
     <div class="main" align="right">
         <div>
             <img src="{{f.photo_url}}" align="left"/>
@@ -92,17 +93,18 @@
         <div align="left" style="margin-left: 20px; font-size: 16pt;">
             <a href="/user/{{f.id}}" style="margin-left: 20px; color: #eeeeee;">{{f.name}}
                 {{f.surname}}</a>
-            {% if f.id == current_user.id %}
+            {% if f.id in arr_self %}
             <p></p>
-            <a href="/logout" class="btn btn-outline-light" style="margin-left: 20px;">Logout</a>
-            <a href="/info/{{f.id}}" class="btn btn-outline-light">Edit</a>
+            <a href="/" class="btn btn-outline-light" style="margin-left: 20px;">Написать</a>
+            <a href="/from_follow/{{current_user.id}}/{{f.id}}" class="btn btn-outline-light">Отписаться</a>
             {% else %}
             <p></p>
-            <a href="/" class="btn btn-outline-light" style="margin-left: 20px;">Message</a>
-            <a href="/friends" class="btn btn-outline-light">Follow</a>
+            <a href="/" class="btn btn-outline-light" style="margin-left: 20px;">Написать</a>
+            <a href="/to_follow/{{current_user.id}}/{{f.id}}" class="btn btn-outline-light">Подписаться</a>
             {% endif %}
         </div>
     </div>
+    {% endif %}
     {% endfor %}
 </div>
 {% endblock %}
