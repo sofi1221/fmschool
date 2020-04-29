@@ -3,10 +3,12 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link rel="icon" href="https://psv4.userapi.com/c856436/u295164923/docs/d11/53c945b3c74e/logo.png?extra=9t5Eqcb53dm-Rc64VfcOw9hxWVZe6C2H1tDPgL4AjV6NBW0sXEoNFS6raT1JWApEqCxGxF0SlUya91rDa2WDza__xEOWhlk_kFV4bFuBBVOyc2r_dPTDg1OsIYq2plrRlVPAYdxkW3fNpk1Za6iQkqg" type="image/x-icon">
     <link rel="stylesheet"
           href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
           integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh"
           crossorigin="anonymous">
+<!--    <link rel="icon" href="https://yastatic.net/doccenter/images/support.yandex.ru/ru/webmaster/freeze/HiMG5QA3a2hVp5rNhzmc_q5KqUc.png" type="image/png">-->
     <style type="text/css">
     body {
     background-image: url(https://luxfon.com/images/201303/luxfon.com_19835.jpg);
@@ -92,7 +94,7 @@
     {%if current_user.is_authenticated or xxx == 1%}
     <div id="menu">
         <div><a href="/">Новости</a></div>
-        <div><a href="/">Сообщения</a></div>
+        <div><a href="/messages">Сообщения</a></div>
         {%if current_user.is_authenticated%}
         <div><a href="/follows/{{current_user.id}}">Подписки</a></div>
         {% endif %}
