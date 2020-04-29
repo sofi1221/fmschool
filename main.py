@@ -210,6 +210,31 @@ def main():
             session.commit()
             return redirect('/')
         return render_template('add_news.html', form=form)
+
+    @app.route('/news_edit/<int:id>', methods=['GET', 'POST'])
+    @login_required
+    def edit_news(id):
+        form = AddNews()
+        if request.method == "GET":
+            session = db_session.create_session()
+            job = session.query(News).filter(News.id == id).first()
+            if job:
+                form.text.data = job.text
+                form.img_url.data = job.img_url
+            else:
+                abort(404)
+        if form.validate_on_submit():
+            session = db_session.create_session()
+            job = session.query(News).filter(News.id == id).first()
+            if job:
+                job.text = form.text.data
+                job.img_url = form.img_url.data
+                session.commit()
+                return redirect('/user/' + str(current_user.id))
+            else:
+                abort(404)
+        return render_template('add_news.html', form=form)
+
     app.run()
 
 
