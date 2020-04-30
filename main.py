@@ -6,6 +6,7 @@ from flask import render_template, Flask, request
 import users_api
 import base64
 from flask_login import current_user
+from datetime import datetime
 
 from WEB.data import db_session
 from WEB.data.users import User, RegisterForm, LoginForm, InfoForm, News, AddNews, Messages, \
@@ -208,7 +209,8 @@ def main():
                 user_id=current_user.id,
                 img_url=form.img_url.data,
                 likes=0,
-                ids=''
+                ids='',
+                date=datetime.now().strftime("%d/%m/%y %H:%M")
             )
             session.add(job)
             session.commit()
@@ -248,14 +250,18 @@ def main():
             session = db_session.create_session()
             job = Messages(
                 text=form.text.data,
-                user_from=current_user.id
+                user_from=current_user.id,
+                date=datetime.now().strftime("%d/%m/%y %H:%M"),
+                is_read=0
             )
+            # print(datetime.now().strftime("%d/%m/%y %H:%M"))
             session.add(job)
             session.commit()
 
             session = db_session.create_session()
             g = session.query(Groups).get(id)
             g.messages += ',' + str(session.query(Messages).all()[-1].id)
+            g.last_time = datetime.now().strftime("%d/%m/%y %H:%M")
             s = form.text.data
             if len(s) >= 50:
                 s = s[:47] + '...'
@@ -266,6 +272,11 @@ def main():
         g = session.query(Groups).get(id)
         arr = g.messages.split(',')[1:]
         session = db_session.create_session()
+        x1 = session.query(Messages).filter(Messages.user_from != current_user.id, Messages.is_read == 0).all()
+        for w in x1:
+            if str(w.id) in arr:
+                w.is_read = 1
+                session.commit()
         f = [session.query(Messages).get(int(x)) for x in arr]
         return render_template('messages.html', messages=f, xxx=0, form=form)
 
@@ -275,9 +286,30 @@ def main():
         session = db_session.create_session()
         arr = [int(x) for x in session.query(User).get(current_user.id).messages_ids.split(',')[1:]]
         m = [session.query(Groups).get(x) for x in arr]
+        m.sort(key=lambda x: datetime.strptime(x.last_time, "%d/%m/%y %H:%M"), reverse=True)
         x = [[session.query(User).get(int(y)) for y in x.users.split(',')[1:] if
               y != str(current_user.id)][0] for x in m]
-        return render_template('groups.html', xxx=0, m=m, x=x)
+        arr_count = []
+        for i in m:
+            x1 = session.query(Messages).filter(Messages.user_from != current_user.id,
+                                                Messages.is_read == 0).all()
+            s = 0
+            arr__ = i.messages.split(',')[1:]
+            for w in x1:
+                if str(w.id) in arr__:
+                    s += 1
+            arr_count += [s]
+        arr_my_read = []
+        for i in m:
+            try:
+                mess = session.query(Messages).get(int(i.messages.split(',')[-1]))
+                if mess.user_from == current_user.id and mess.is_read == 0:
+                    arr_my_read += [1]
+                else:
+                    arr_my_read += [0]
+            except Exception as e:
+                arr_my_read += [0]
+        return render_template('groups.html', xxx=0, m=m, x=x, c=arr_count, amr=arr_my_read)
 
     @app.route('/is_message/<int:id>')
     @login_required
@@ -294,7 +326,8 @@ def main():
             group = Groups(
                 messages='',
                 users=f',{current_user.id},{id}',
-                last='No messages'
+                last='No messages',
+                last_time=datetime.now().strftime("%d/%m/%y %H:%M")
             )
             session.add(group)
             session.commit()

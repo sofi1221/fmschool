@@ -2,8 +2,9 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-        <link rel="icon" href="https://psv4.userapi.com/c856436/u295164923/docs/d11/53c945b3c74e/logo.png?extra=9t5Eqcb53dm-Rc64VfcOw9hxWVZe6C2H1tDPgL4AjV6NBW0sXEoNFS6raT1JWApEqCxGxF0SlUya91rDa2WDza__xEOWhlk_kFV4bFuBBVOyc2r_dPTDg1OsIYq2plrRlVPAYdxkW3fNpk1Za6iQkqg" type="image/x-icon">
-
+        <link rel="icon"
+          href="https://drive.google.com/file/d/18HueSVnOTwTXBYDJlqeZgHCFTfZJjAYx/view?usp=sharing"
+          type="image/png">
     <title>Register</title>
     <style type="text/css">
         .form {
@@ -26,7 +27,7 @@
         {{ form.csrf_token }}
         <p>
             {{ form.email.label }}<br>
-            {{ form.email(class="form-control", type="email") }}<br>
+            {{ form.email(class="form-control", autocomplete="off", type="email") }}<br>
             {% for error in form.email.errors %}
         <p class="alert alert-danger" role="alert">
             {{ error }}
@@ -36,7 +37,7 @@
 
         <p>
             {{ form.surname.label }}<br>
-            {{ form.surname(class="form-control") }}<br>
+            {{ form.surname(autocomplete="off", class="form-control") }}<br>
             {% for error in form.surname.errors %}
         <p class="alert alert-danger" role="alert">
             {{ error }}
@@ -45,7 +46,7 @@
         </p>
         <p>
             {{ form.name.label }}<br>
-            {{ form.name(class="form-control") }}<br>
+            {{ form.name(autocomplete="off", class="form-control") }}<br>
             {% for error in form.name.errors %}
         <p class="alert alert-danger" role="alert">
             {{ error }}
@@ -54,7 +55,7 @@
         </p>
         <p>
             {{ form.phone.label }}<br>
-            {{ form.phone(class="form-control") }}<br>
+            {{ form.phone(autocomplete="off", class="form-control") }}<br>
             {% for error in form.phone.errors %}
         <p class="alert alert-danger" role="alert">
             {{ error }}
@@ -63,7 +64,7 @@
         </p>
         <p>
             {{ form.position.label }}<br>
-            {{ form.position(class="form-control") }}<br>
+            {{ form.position(autocomplete="off", class="form-control") }}<br>
             {% for error in form.position.errors %}
         <p class="alert alert-danger" role="alert">
             {{ error }}
@@ -72,7 +73,7 @@
         </p>
         <p>
             {{ form.school_year.label }}<br>
-            {{ form.school_year(class="form-control") }}<br>
+            {{ form.school_year(autocomplete="off", class="form-control") }}<br>
             {% for error in form.school_year.errors %}
         <p class="alert alert-danger" role="alert">
             {{ error }}
@@ -81,7 +82,7 @@
         </p>
         <p>
             {{ form.liter.label }}<br>
-            {{ form.liter(class="form-control") }}<br>
+            {{ form.liter(autocomplete="off", class="form-control") }}<br>
             {% for error in form.liter.errors %}
         <p class="alert alert-danger" role="alert">
             {{ error }}
@@ -90,7 +91,7 @@
         </p>
         <p>
             {{ form.profile.label }}<br>
-            {{ form.profile(class="form-control") }}<br>
+            {{ form.profile(autocomplete="off", class="form-control") }}<br>
             {% for error in form.profile.errors %}
         <p class="alert alert-danger" role="alert">
             {{ error }}
@@ -99,7 +100,7 @@
         </p>
         <p>
             {{ form.photo_url.label }}<br>
-            {{ form.photo_url(class="form-control") }}<br>
+            {{ form.photo_url(autocomplete="off", class="form-control") }}<br>
             {% for error in form.photo_url.errors %}
         <p class="alert alert-danger" role="alert">
             {{ error }}

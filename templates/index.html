@@ -3,7 +3,9 @@
 <head>
     <meta charset="UTF-8">
     <title>News</title>
-        <link rel="icon" href="https://psv4.userapi.com/c856436/u295164923/docs/d11/53c945b3c74e/logo.png?extra=9t5Eqcb53dm-Rc64VfcOw9hxWVZe6C2H1tDPgL4AjV6NBW0sXEoNFS6raT1JWApEqCxGxF0SlUya91rDa2WDza__xEOWhlk_kFV4bFuBBVOyc2r_dPTDg1OsIYq2plrRlVPAYdxkW3fNpk1Za6iQkqg" type="image/x-icon">
+        <link rel="icon"
+          href="https://drive.google.com/file/d/18HueSVnOTwTXBYDJlqeZgHCFTfZJjAYx/view?usp=sharing"
+          type="image/png">
     <style type="text/css">
         .news {
             background: rgba(87, 87, 87, 0.8);;
@@ -40,23 +42,29 @@
     <a name="id_{{i.id}}" style="padding-bottom: 100px;"></a>
     <div class="news">
         <img align="left" src="{{i.user.photo_url}}"
-             style="margin-left: 8%; width: 10%; height: 10%; margin-right: 2%; margin-bottom: 2%;  border-radius: 50%;"/>
+             style="margin-left: 8%; width: 10%; height: 10%; margin-right: 2%; margin-bottom: 2%;  border-radius: 50%; float: left;"/>
 
         {%if i.user.id == current_user.id%}
+        <div align="left" style="float: right;">
+        <a href="/news_delete/{{i.id}}" style="color: #eeeeee; margin-right: 1%; font-size: 14pt">Удалить</a>
+        <a href="/news_edit/{{i.id}}" style="color: #eeeeee; font-size: 14pt">Редактировать</a></div>
+        <div align="left">
+            <h2 align="left"><a href="/user/{{i.user.id}}"
+                                style="color: #eeeeee;">{{i.user.name}}
+                {{i.user.surname}}</a></h2><div style="color: #eeeeee; font-size: 11pt;">{{i.date}}</div>
+
+
+        </div>
+
+        {%else%}
         <div align="left">
             <h2 align="left"><a href="/user/{{i.user.id}}"
                                 style="color: #eeeeee;">{{i.user.name}}
                 {{i.user.surname}}</a></h2>
-            <a href="/news_delete/{{i.id}}" style="color: #eeeeee; margin-right: 2%;">Удалить</a>
-            <a href="/news_edit/{{i.id}}" style="color: #eeeeee;">Редактировать</a>
-        </div>
-        {%else%}
-        <div align="left">
-            <h2 align="left" style="margin-top: 2%;"><a href="/user/{{i.user.id}}"
-                                                        style="color: #eeeeee;">{{i.user.name}}
-                {{i.user.surname}}</a></h2>
+            <div style="color: #eeeeee; font-size: 11pt">{{i.date}}</div>
         </div>
         {%endif%}
+
         <p></p>
         <img src="{{i.img_url}}"/>
         <p></p>

@@ -3,8 +3,9 @@
 <head>
     <meta charset="UTF-8">
     <title>Register</title>
-        <link rel="icon" href="https://psv4.userapi.com/c856436/u295164923/docs/d11/53c945b3c74e/logo.png?extra=9t5Eqcb53dm-Rc64VfcOw9hxWVZe6C2H1tDPgL4AjV6NBW0sXEoNFS6raT1JWApEqCxGxF0SlUya91rDa2WDza__xEOWhlk_kFV4bFuBBVOyc2r_dPTDg1OsIYq2plrRlVPAYdxkW3fNpk1Za6iQkqg" type="image/x-icon">
-
+        <link rel="icon"
+          href="https://drive.google.com/file/d/18HueSVnOTwTXBYDJlqeZgHCFTfZJjAYx/view?usp=sharing"
+          type="image/png">
     <style type="text/css">
         .form {
             background: rgba(87, 87, 87, 0.8);;
@@ -26,7 +27,7 @@
         {{ form.csrf_token }}
         <p>
             {{ form.email.label }}<br>
-            {{ form.email(class="form-control", type="email") }}<br>
+            {{ form.email(class="form-control", autocomplete="off", type="email") }}<br>
             {% for error in form.email.errors %}
         <p class="alert alert-danger" role="alert">
             {{ error }}
@@ -35,7 +36,7 @@
         </p>
         <p>
             {{ form.password.label }}<br>
-            {{ form.password(class="form-control", type="password") }}<br>
+            {{ form.password(class="form-control", autocomplete="off", type="password") }}<br>
             {% for error in form.password.errors %}
         <p class="alert alert-danger" role="alert">
             {{ error }}
@@ -44,7 +45,7 @@
         </p>
         <p>
             {{ form.password_again.label }}<br>
-            {{ form.password_again(class="form-control", type="password") }}<br>
+            {{ form.password_again(class="form-control", autocomplete="off", type="password") }}<br>
             {% for error in form.password_again.errors %}
         <p class="alert alert-danger" role="alert">
             {{ error }}
@@ -53,7 +54,7 @@
         </p>
         <p>
             {{ form.surname.label }}<br>
-            {{ form.surname(class="form-control") }}<br>
+            {{ form.surname(autocomplete="off", class="form-control") }}<br>
             {% for error in form.surname.errors %}
         <p class="alert alert-danger" role="alert">
             {{ error }}
@@ -62,7 +63,7 @@
         </p>
         <p>
             {{ form.name.label }}<br>
-            {{ form.name(class="form-control") }}<br>
+            {{ form.name(autocomplete="off", class="form-control") }}<br>
             {% for error in form.name.errors %}
         <p class="alert alert-danger" role="alert">
             {{ error }}
@@ -71,7 +72,7 @@
         </p>
         <p>
             {{ form.phone.label }}<br>
-            {{ form.phone(class="form-control") }}<br>
+            {{ form.phone(autocomplete="off", class="form-control") }}<br>
             {% for error in form.phone.errors %}
         <p class="alert alert-danger" role="alert">
             {{ error }}
@@ -80,7 +81,7 @@
         </p>
         <p>
             {{ form.position.label }}<br>
-            {{ form.position(class="form-control") }}<br>
+            {{ form.position(autocomplete="off", class="form-control") }}<br>
             {% for error in form.position.errors %}
         <p class="alert alert-danger" role="alert">
             {{ error }}

@@ -4,8 +4,8 @@
     <meta charset="UTF-8">
     <title>Сообщения</title>
     <link rel="icon"
-          href="https://psv4.userapi.com/c856436/u295164923/docs/d11/53c945b3c74e/logo.png?extra=9t5Eqcb53dm-Rc64VfcOw9hxWVZe6C2H1tDPgL4AjV6NBW0sXEoNFS6raT1JWApEqCxGxF0SlUya91rDa2WDza__xEOWhlk_kFV4bFuBBVOyc2r_dPTDg1OsIYq2plrRlVPAYdxkW3fNpk1Za6iQkqg"
-          type="image/x-icon">
+          href="https://drive.google.com/file/d/18HueSVnOTwTXBYDJlqeZgHCFTfZJjAYx/view?usp=sharing"
+          type="image/png">
     <style type="text/css">
         .my {
         margin: 5px;
@@ -15,11 +15,13 @@
             height: 85%;
         }
         .my div {
-            background: rgba(87, 87, 87, 0.9);;
+            background: rgba(120, 120, 120, 0.9);;
             color: #eeeeee;
             border-radius: 25px;
             padding: 15px; /* Значения отступов */
             margin: 5px;
+            margin-top: 20px;
+            margin-bottom: 0px;
             max-width: 60%;
             display: inline-flex;
         }
@@ -36,6 +38,8 @@
             border-radius: 25px;
             padding: 15px; /* Значения отступов */
             margin: 5px;
+            margin-top: 20px;
+            margin-bottom: 0px;
             width: auto;
             max-width: 60%;
             display: inline-flex;
@@ -70,18 +74,28 @@
 <div align="center" style="margin-bottom: 100px; min-height: 60vh; margin-top: 40px;">
     {%for i in messages%}
     {% if i.user_from == current_user.id %}
+    {%if i.is_read == 0%}
+    <div style="background: rgba(51, 204, 119, 0.25); width: 100%; margin: 0;">
     <div class="my" align="right">
         <a href="/user/{{i.user.id}}"><img src="{{i.user.photo_url}}" style="height: 5%; width: 5%; border-radius: 50%;
-        margin-top: 15px;" align="right"/></a>
+        margin-top: 30px;" align="right"/></a>
         <div>{{i.text}}</div>
+    </div><div align="right" style="font-size: 10pt; color: #cccccc">{{i.date}}</div></div>
+    {%else%}
+    <div class="my" align="right">
+        <a href="/user/{{i.user.id}}"><img src="{{i.user.photo_url}}" style="height: 5%; width: 5%; border-radius: 50%;
+        margin-top: 30px;" align="right"/></a>
+        <div>{{i.text}}</div>
+    </div><div align="right" style="font-size: 10pt; color: #cccccc">{{i.date}}</div>
+    {%endif%}
 
-    </div>
     {%else%}
     <div class="other" align="left">
         <a href="/user/{{i.user.id}}"><img src="{{i.user.photo_url}}" style="height: 5%; width: 5%; border-radius: 50%;
-        margin-top: 15px;" align="left"/></a>
+        margin-top: 30px;" align="left"/></a>
         <div>{{i.text}}</div>
     </div>
+    <div align="left" style="font-size: 10pt; color: #cccccc">{{i.date}}</div>
     {%endif%}
     {%endfor%}
     <div style="position: fixed; /* Фиксированное положение */
@@ -90,7 +104,7 @@
         {{ form.hidden_tag() }}
         {{ form.csrf_token }}
         <div>{{ form.text.label }}<br>
-            {{ form.text(class="form-control", style="width: 90%; margin: 5px; background: rgba(44, 44, 44, 0.9); color: #eeeeee; float: left; height: 55px;") }}</div>
+            {{ form.text(class="form-control", autocomplete="off", style="width: 90%; margin: 5px; background: rgba(44, 44, 44, 0.9); color: #eeeeee; float: left; height: 55px;") }}</div>
         <div>{{ form.submit(type="submit", class="btn btn-outline-light", style="font-size: 20pt; margin-top: 5px; float: right") }}</div>
     </form>
     </div></div>

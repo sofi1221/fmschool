@@ -76,10 +76,11 @@ class News(SqlAlchemyBase, UserMixin, SerializerMixin):
     id = sqlalchemy.Column(sqlalchemy.Integer,
                            primary_key=True, autoincrement=True)
     user_id = sqlalchemy.Column(sqlalchemy.Integer, sqlalchemy.ForeignKey("users.id"))
-    text = sqlalchemy.Column(sqlalchemy.String, nullable=True)
+    text = sqlalchemy.Column(sqlalchemy.Text, nullable=True)
     img_url = sqlalchemy.Column(sqlalchemy.String, nullable=True)
     likes = sqlalchemy.Column(sqlalchemy.String, nullable=True)
     ids = sqlalchemy.Column(sqlalchemy.String, nullable=True)
+    date = sqlalchemy.Column(sqlalchemy.String, nullable=True)
     user = orm.relation('User')
 
 
@@ -97,6 +98,8 @@ class Messages(SqlAlchemyBase, UserMixin, SerializerMixin):
     user_from = sqlalchemy.Column(sqlalchemy.Integer, sqlalchemy.ForeignKey("users.id"))
     text = sqlalchemy.Column(sqlalchemy.String, nullable=True)
     img_url = sqlalchemy.Column(sqlalchemy.String, nullable=True)
+    date = sqlalchemy.Column(sqlalchemy.String, nullable=True)
+    is_read = sqlalchemy.Column(sqlalchemy.Integer, nullable=True)
     user = orm.relation('User')
 
 
@@ -108,6 +111,7 @@ class Groups(SqlAlchemyBase, UserMixin, SerializerMixin):
     messages = sqlalchemy.Column(sqlalchemy.String, nullable=True)
     users = sqlalchemy.Column(sqlalchemy.String, nullable=True)
     last = sqlalchemy.Column(sqlalchemy.String, nullable=True)
+    last_time = sqlalchemy.Column(sqlalchemy.String, nullable=True)
 
 
 class SendMessage(FlaskForm):

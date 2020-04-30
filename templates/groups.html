@@ -4,8 +4,8 @@
     <meta charset="UTF-8">
     <title>Сообщения</title>
     <link rel="icon"
-          href="https://psv4.userapi.com/c856436/u295164923/docs/d11/53c945b3c74e/logo.png?extra=9t5Eqcb53dm-Rc64VfcOw9hxWVZe6C2H1tDPgL4AjV6NBW0sXEoNFS6raT1JWApEqCxGxF0SlUya91rDa2WDza__xEOWhlk_kFV4bFuBBVOyc2r_dPTDg1OsIYq2plrRlVPAYdxkW3fNpk1Za6iQkqg"
-          type="image/x-icon">
+          href="https://drive.google.com/file/d/18HueSVnOTwTXBYDJlqeZgHCFTfZJjAYx/view?usp=sharing"
+          type="image/png">
     <style type="text/css">
         .news {
             background: rgba(87, 87, 87, 0.8);
@@ -38,9 +38,16 @@
         <div align="left">
             <h4 align="left" style="margin-top: 2%;"><a href="/user/{{x[loop.index - 1].id}}"
                                                         style="color: #eeeeee;">{{x[loop.index - 1].name}}
-                {{x[loop.index - 1].surname}}</a></h4>
+                {{x[loop.index - 1].surname}}</a>{% if c[loop.index - 1] != 0%}<a style="background: rgba(51, 204, 119, 0.25); border-radius: 50px; margin-left: 15px; padding-right: 10px; padding-left: 10px;">{{c[loop.index - 1]}} </a>{%endif%}</h4>
+            <div align="right" style="float: right; padding-top: 5px; padding-right: 20px;">{{i.last_time}}</div>
+            {%if amr[loop.index - 1] == 1%}
+            <div style="background: rgba(51, 204, 119, 0.25); margin: 5px; border-radius: 10px; padding: 5px; padding-left: 20px;;">
+            {{i.last}}</div>
+            {%else%}
             <div style="background: rgba(44, 44, 44, 0.8); margin: 5px; border-radius: 10px; padding: 5px; padding-left: 20px;;">
             {{i.last}}</div>
+            {%endif%}
+
         </div>
     </div></a>
     {%endfor%}
