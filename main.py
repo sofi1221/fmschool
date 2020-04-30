@@ -8,8 +8,8 @@ import base64
 from flask_login import current_user
 from datetime import datetime
 
-from WEB.data import db_session
-from WEB.data.users import User, RegisterForm, LoginForm, InfoForm, News, AddNews, Messages, \
+from .data import db_session
+from .data.users import User, RegisterForm, LoginForm, InfoForm, News, AddNews, Messages, \
     SendMessage, Groups
 
 app = Flask(__name__)
