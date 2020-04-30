@@ -7,8 +7,8 @@ import users_api
 from flask_login import current_user
 from datetime import datetime
 
-from .data import db_session
-from .data.users import User, RegisterForm, LoginForm, InfoForm, News, AddNews, Messages, \
+from data import db_session
+from data.users import User, RegisterForm, LoginForm, InfoForm, News, AddNews, Messages, \
     SendMessage, Groups
 
 app = Flask(__name__)
