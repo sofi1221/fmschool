@@ -1,1 +1,1 @@
-web: grunion wsgi: app
+web: gunicorn wsgi: app
