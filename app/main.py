@@ -7,8 +7,8 @@ import users_api
 from flask_login import current_user
 from datetime import datetime
 
-from data import db_session
-from data.users import User, RegisterForm, LoginForm, InfoForm, News, AddNews, Messages, \
+from app.data import db_session
+from app.data.users import User, RegisterForm, LoginForm, InfoForm, News, AddNews, Messages, \
     SendMessage, Groups
 
 app = Flask(__name__)
@@ -339,9 +339,3 @@ def main():
             me.messages_ids += ',' + str(m1[-1])
             session.commit()
             return redirect('/messages')
-
-    app.run()
-
-
-if __name__ == '__main__':
-    main()
