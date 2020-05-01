@@ -13,7 +13,6 @@ pymorphy2==0.8
 pymorphy2-dicts==2.4.393442.3710985
 PyQt5==5.13.2
 PyQt5-sip==12.7.0
-pyqt5-tools==5.13.0.1.5
 python-docx==0.8.10
 python-dotenv==0.10.3
 python-pptx==0.6.18
