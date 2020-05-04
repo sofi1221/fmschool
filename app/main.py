@@ -1,11 +1,10 @@
 import flask
-from flask_login import LoginManager, login_user, login_required, logout_user
 from werkzeug.exceptions import abort
 from werkzeug.utils import redirect
 from flask import render_template, Flask, request
 import users_api
-from flask_login import current_user
 from datetime import datetime
+from flask_login import LoginManager, login_user, login_required, logout_user, current_user
 
 from app.data import db_session
 from app.data.users import User, RegisterForm, LoginForm, InfoForm, News, AddNews, Messages, \
