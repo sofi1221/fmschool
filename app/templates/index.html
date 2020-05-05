@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>News</title>
+        <link rel="icon"
+          href="https://drive.google.com/file/d/18HueSVnOTwTXBYDJlqeZgHCFTfZJjAYx/view?usp=sharing"
+          type="image/png">
+    <style type="text/css">
+        .news {
+            background: rgba(87, 87, 87, 0.8);;
+            color: #eeeeee;
+            border-radius: 10px;
+            padding: 15px; /* Значения отступов */
+            margin: 15px;
+        }
+        .news img {
+            width: 85%;
+            height: 85%;
+        }
+
+
+
+
+    </style>
+</head>
+
+<body>
+{% extends "base.html" %}
+{% block content %}
+<div class="news">
+    <img align="left" src="{{current_user.photo_url}}"
+         style="margin-left: 8%; width: 15%; height: 15%; margin-right: 2%; margin-bottom: 2%; border-radius: 50%;"/>
+    <h1>{{current_user.name}} {{current_user.surname}}</h1>
+    <a href="/add_news" class="btn btn-outline-light" style="font-size: 16pt;">Добавить новость</a>
+</div>
+<h1 align="center">News</h1>
+
+
+<div align="center">
+    {%for i in news%}
+    <a name="id_{{i.id}}" style="padding-bottom: 100px;"></a>
+    <div class="news">
+        <img align="left" src="{{i.user.photo_url}}"
+             style="margin-left: 8%; width: 10%; height: 10%; margin-right: 2%; margin-bottom: 2%;  border-radius: 50%; float: left;"/>
+
+        {%if i.user.id == current_user.id%}
+        <div align="left" style="float: right;">
+        <a href="/news_delete/{{i.id}}" style="color: #eeeeee; margin-right: 1%; font-size: 14pt">Удалить</a>
+        <a href="/news_edit/{{i.id}}" style="color: #eeeeee; font-size: 14pt">Редактировать</a></div>
+        <div align="left">
+            <h2 align="left"><a href="/user/{{i.user.id}}"
+                                style="color: #eeeeee;">{{i.user.name}}
+                {{i.user.surname}}</a></h2><div style="color: #eeeeee; font-size: 11pt;">{{i.date}}</div>
+
+
+        </div>
+
+        {%else%}
+        <div align="left">
+            <h2 align="left"><a href="/user/{{i.user.id}}"
+                                style="color: #eeeeee;">{{i.user.name}}
+                {{i.user.surname}}</a></h2>
+            <div style="color: #eeeeee; font-size: 11pt">{{i.date}}</div>
+        </div>
+        {%endif%}
+
+        <p></p>
+        <img src="{{i.img_url}}"/>
+        <p></p>
+        <p align="left" style="margin-left: 8%; font-size: 16pt;">{{i.text}}</p>
+        <div align="left" style="margin-left: 8%; margin-top: 10px;">
+            {%if current_user.id in arr[loop.index - 1]%}
+            <a href="/like/{{current_user.id}}/{{i.id}}" class="btn btn-outline-light">♥
+                {{i.likes}}</a>
+            {%else%}
+            <a href="/like/{{current_user.id}}/{{i.id}}" class="btn btn-outline-light">♡
+                {{i.likes}}</a>
+            {%endif%}
+        </div>
+    </div>
+    {%endfor%}
+
+</div>
+
+{% endblock %}
+</body>
+</html>

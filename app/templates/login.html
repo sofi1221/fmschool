@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+        <link rel="icon"
+          href="https://drive.google.com/file/d/18HueSVnOTwTXBYDJlqeZgHCFTfZJjAYx/view?usp=sharing"
+          type="image/png">
+    <title>Authorization</title>
+    <style type="text/css">
+        .form {
+            background: rgba(87, 87, 87, 0.8);;
+            color: #eeeeee;
+            border-radius: 10px;
+            padding: 15px; /* Значения отступов */
+            margin: 15px;
+        }
+    </style>
+</head>
+
+<body>
+{% extends "base.html" %}
+{% block content %}
+
+<h1 align="center">Authorization</h1>
+<div class="form">
+    <form action="" method="post">
+        {{ form.hidden_tag() }}
+        <p>
+            {{ form.email.label }}<br>
+            {{ form.email(class="form-control", type="email") }}<br>
+            {% for error in form.email.errors %}
+                <div class="alert alert-danger" role="alert">
+                    {{ error }}
+                </div>
+            {% endfor %}
+        </p>
+        <p>
+            {{ form.password.label }}<br>
+            {{ form.password(autocomplete="off", class="form-control", type="password") }}<br>
+            {% for error in form.password.errors %}
+                <div class="alert alert-danger" role="alert">
+                    {{ error }}
+                </div>
+            {% endfor %}
+        </p>
+        <p>{{ form.submit(type="submit", class="btn btn-outline-light") }}</p>
+        <div>{{ message }}</div>
+    </form>
+</div>
+{% endblock %}
+</body>
+</html>

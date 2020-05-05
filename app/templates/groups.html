@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Сообщения</title>
+    <link rel="icon"
+          href="https://drive.google.com/file/d/18HueSVnOTwTXBYDJlqeZgHCFTfZJjAYx/view?usp=sharing"
+          type="image/png">
+    <style type="text/css">
+        .news {
+            background: rgba(87, 87, 87, 0.8);
+            color: #eeeeee;
+            border-radius: 10px;
+            padding: 15px; /* Значения отступов */
+            margin: 15px;
+        }
+        .news img {
+            width: 85%;
+            height: 85%;
+        }
+
+
+
+
+
+    </style>
+</head>
+
+<body>
+{% extends "base.html" %}
+{% block content %}
+
+<div align="center">
+    {%for i in m %}
+    <a href="/messages/{{i.id}}#end"><div class="news">
+        <img align="left" src="{{x[loop.index - 1].photo_url}}"
+             style="margin-left: 20px; width: 10%; height: 10%; margin-right: 2%; margin-bottom: 2%;  border-radius: 50%;"/>
+        <div align="left">
+            <h4 align="left" style="margin-top: 2%;"><a href="/user/{{x[loop.index - 1].id}}"
+                                                        style="color: #eeeeee;">{{x[loop.index - 1].name}}
+                {{x[loop.index - 1].surname}}</a>{% if c[loop.index - 1] != 0%}<a style="background: rgba(51, 204, 119, 0.25); border-radius: 50px; margin-left: 15px; padding-right: 10px; padding-left: 10px;">{{c[loop.index - 1]}} </a>{%endif%}</h4>
+            <div align="right" style="float: right; padding-top: 5px; padding-right: 20px;">{{i.last_time}}</div>
+            {%if amr[loop.index - 1] == 1%}
+            <div style="background: rgba(51, 204, 119, 0.25); margin: 5px; border-radius: 10px; padding: 5px; padding-left: 20px;;">
+            {{i.last}}</div>
+            {%else%}
+            <div style="background: rgba(44, 44, 44, 0.8); margin: 5px; border-radius: 10px; padding: 5px; padding-left: 20px;;">
+            {{i.last}}</div>
+            {%endif%}
+
+        </div>
+    </div></a>
+    {%endfor%}
+
+</div>
+
+{% endblock %}
+</body>
+</html>
