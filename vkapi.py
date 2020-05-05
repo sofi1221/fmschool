@@ -186,8 +186,17 @@ def site(vk, longpoll):
                                          '"меню"',
                                  random_id=random.randint(0, 2 ** 64))
 
+def upload_mem(vk_session, event, dict, x):
+    upload = vk_api.VkUpload(vk_session)
+    photo = upload.photo_messages([f'{dict}\{random.randint(1, x)}.jpg'])
+    vk_photo_id = f"photo{photo[0]['owner_id']}_{photo[0]['id']}"
+    vk = vk_session.get_api()
+    vk.messages.send(user_id=event.obj.message['from_id'],
+                     attachment=vk_photo_id, message='',
+                     random_id=random.randint(0, 2 ** 64))
 
-def talk(vk, longpoll, name):
+
+def talk(vk, longpoll, name, vk_session):
     n = 0
     yes = ['Это замечательно!', 'Классно!', 'Положительный ответ - сладость для моих ушей', 'Вот это превосходно!',
            '👍🏻', '🙏🏻', '🤘']
@@ -206,20 +215,50 @@ def talk(vk, longpoll, name):
                                  random_id=random.randint(0, 2 ** 64))
             if ('выйти' in text) or ('стоп' in text):
                 vk.messages.send(user_id=event.obj.message['from_id'],
-                                 message="Это прекрано! А я - чат-бот, и мне это ужасно нравится! А ты любишь "
-                                         "то, что делаешь?",
+                                 message=f"Было приятно с Вами пообщаться! До встречи, {name}",
                                  random_id=random.randint(0, 2 ** 64))
             elif n == 0:
                 vk.messages.send(user_id=event.obj.message['from_id'],
-                                 message="Это прекрано! А я - чат-бот, и мне это ужасно нравится! А ты любишь "
-                                         "то, что делаешь?",
+                                 message=f"Это прекрано, {name}! А я - чат-бот, и мне это ужасно нравится! А Вы любите "
+                                         "то, что делаете?",
                                  random_id=random.randint(0, 2 ** 64))
-            elif n == 1:
+            elif (n == 1) or ('мем' in text):
                 vk.messages.send(user_id=event.obj.message['from_id'],
-                             message='Возможно, ты захочешь посмеяться? Доказано, что смех продлевает жизнь!\n'
+                             message='Возможно, Вы захотите посмеяться? Доказано, что смех продлевает жизнь!\n'
                                      'Недавно в Яндекс.Лицее проходил конкурс на лучший мем, ребята присылали '
-                                     'столько смешных шуток😂 Показать Вам парочку?',
+                                     'столько смешных шуток😂 Показать Вам парочку? (да/нет)',
                              random_id=random.randint(0, 2 ** 64))
+            elif (n == 2) and ('да' in text):
+                vk.messages.send(user_id=event.obj.message['from_id'],
+                                 message='Чтобы посмотреть еще мемов, напишите: "еще"',
+                                 random_id=random.randint(0, 2 ** 64))
+                upload_mem(vk_session, event, 'yand_mem')
+                n -= 1
+            elif (n==2) and (('еще' in text) or ('ещё' in text)):
+                upload_mem(vk_session, event, 'yand_mem', 27)
+                n -= 1
+            elif n == 2:
+                vk.messages.send(user_id=event.obj.message['from_id'],
+                                 message=f'Еще у меня есть подборка смешных картинок. {name}, посмотрите?(да/нет)',
+                                 random_id=random.randint(0, 2 ** 64))
+                upload_mem(vk_session, event, 'yand_mem')
+            elif (n==3) and ('да' in text):
+                vk.messages.send(user_id=event.obj.message['from_id'],
+                                 message='Чтобы посмотреть еще мемов, напишите: "еще"',
+                                 random_id=random.randint(0, 2 ** 64))
+                upload_mem(vk_session, event, 'else_mem')
+                n -= 1
+            elif (n==3) and (('еще' in text) or ('ещё' in text)):
+                upload_mem(vk_session, event, 'else_mem', 40)
+                n -= 1
+            else:
+                vk.messages.send(user_id=event.obj.message['from_id'],
+                                 message=f'Было приятно с Вами пообщаться! До встречи, {name}!',
+                                 random_id=random.randint(0, 2 ** 64))
+                break
+
+
+
 
 
 def main():
@@ -284,7 +323,7 @@ def main():
                 vk.messages.send(user_id=event.obj.message['from_id'],
                                  message='Давайте пообщаемся! Расскажите о себе. Кто вы?',
                                  random_id=random.randint(0, 2 ** 64))
-                talk(vk, longpoll, name)
+                talk(vk, longpoll, name, vk_session)
             else:
                 vk.messages.send(user_id=event.obj.message['from_id'],
                                  message=f'{name}, я не понял... Заново, пожалуйста.',
