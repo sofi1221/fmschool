@@ -68,20 +68,10 @@ def main():
                                  random_id=random.randint(0, 2 ** 64))
             elif 'расписание' in text:
                 vk.messages.send(user_id=event.obj.message['from_id'],
-                                 message=f'{name}, теперь вы в блоке расписание. Чтобы выйти, напишите "стоп".\n Какой класс? (только цифра)',
+                                 message=f'{name}, теперь вы в блоке расписание. Чтобы выйти, напишите "стоп", Если хотите продолжить - "ок"',
                                  random_id=random.randint(0, 2 ** 64))
                 timet(vk, longpoll, vk_session)
 
-            elif 'картинка' in text:
-                upload = vk_api.VkUpload(vk_session)
-                photo = upload.photo_messages(['timetable\пн1.jpg'])
-                vk_photo_id = f"photo{photo[0]['owner_id']}_{photo[0]['id']}"
-
-                print(photo, vk_photo_id, sep="\n")
-                vk = vk_session.get_api()
-                vk.messages.send(user_id=event.obj.message['from_id'],
-                                 attachment=vk_photo_id, message='картинкааааа',
-                                 random_id=random.randint(0, 2 ** 64))
 
             elif '' in text:
                 vk.messages.send(user_id=event.obj.message['from_id'],
