@@ -40,7 +40,7 @@ def timet(vk, longpoll, vk_session):
                                  random_id=random.randint(0, 2 ** 64))
 
 
-def site(vk, longpoll, vk_session):
+def site(vk, longpoll):
     for event in longpoll.listen():
         text = event.obj.message['text'].lower()
         if event.type == VkBotEventType.MESSAGE_NEW:
@@ -130,20 +130,20 @@ def site(vk, longpoll, vk_session):
                                          'Можно увидеть информацию о нем, его новости. Так как чужие новости удалять '
                                          'нельзя, вы можете только просматривать и лайкать их.',
                                  random_id=random.randint(0, 2 ** 64))
-            elif ('1' in text) or ('регистрация' in text):
-                vk.messages.send(user_id=event.obj.message['from_id'],
-                                 message='1.1. Условия регистрации\n1.2. Как зарегестрироваться\n1.3. Возможности '
-                                         'социальной сети',
-                                 random_id=random.randint(0, 2 ** 64))
             elif ('1.3' in text) or ('возможност' in text) or ('2' in text):
                 vk.messages.send(user_id=event.obj.message['from_id'],
                                  message='Как классно, что соц.сеть ФМШ интересна! Теперь можно узнать о ней все (или '
-                                         'почти все (или чуточку больше😂)). Для этого напиши ',
+                                         'почти все (или чуточку больше😂))',
                                  random_id=random.randint(0, 2 ** 64))
                 vk.messages.send(user_id=event.obj.message['from_id'],
                                  message='Что интересного я могу рассказать:\n2.1. Новости\n2.2. Сообщения\n'
                                          '2.3. Подписки\n2.4. Чат-бот ВК \n2.5 .Пригласить друзей \n'
                                          '2.6. Профиль',
+                                 random_id=random.randint(0, 2 ** 64))
+            elif ('1' in text) or ('регистрация' in text):
+                vk.messages.send(user_id=event.obj.message['from_id'],
+                                 message='1.1. Условия регистрации\n1.2. Как зарегистрироваться\n1.3. Возможности '
+                                         'социальной сети',
                                  random_id=random.randint(0, 2 ** 64))
             elif '3' in text:
                 vk.messages.send(user_id=event.obj.message['from_id'],
@@ -201,7 +201,8 @@ def main():
                                          f'Что вас интересует:\n1. Регистрация\n2. Действия внутри сети\n'
                                          f'3. Подождать ответа менеджера',
                                  random_id=random.randint(0, 2 ** 64))
-                site(vk, longpoll, vk_session)
+                site(vk, longpoll)
+
 
             elif '' in text:
                 vk.messages.send(user_id=event.obj.message['from_id'],
