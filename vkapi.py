@@ -286,7 +286,7 @@ def talk(vk, longpoll, name, vk_session):
             n += 1
 
 
-def main():
+def apivk():
     vk_session = vk_api.VkApi(
         token='1fcd036663cf0104cf09ecce90a3f5730755ba1d554a4e6b1aa3fd89c1117441a4961e7bd7cda4de441c7')
     longpoll = VkBotLongPoll(vk_session, 174388874)
@@ -355,5 +355,5 @@ def main():
             m += 1
 
 
-if __name__ == '__main__':
-    main()
+if __name__ == '__vk__':
+    apivk()
