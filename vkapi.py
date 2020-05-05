@@ -149,13 +149,36 @@ def site(vk, longpoll):
                 vk.messages.send(user_id=event.obj.message['from_id'],
                                  message='Хорошо, скоро наш менеджер свяжется с вами',
                                  random_id=random.randint(0, 2 ** 64))
-            elif 'меню' in text:
+            elif ('полное меню' in text) or ('4.2' in text):
                 vk.messages.send(user_id=event.obj.message['from_id'],
-                                 message='Что вас интересует:\n1. Регистрация\n2. Возможности социальной сети\n'
-                                         '3. Подождать ответа менеджера\n4. Возможные действия - меню\n'
+                                 message='Вот, в чем я могу помочь относительно социальной сети ФМШ:'
+                                         '\n1. регистрация'
+                                         '\n  1.1. Условия регистрации'
+                                         '\n  1.2. Как зарегистрироваться'
+                                         '\n  1.3. Возможности социальной сети'
+                                         '\n2. Возможности социальной сети'
+                                         '\n  2.1. Новости'
+                                         '\n  2.2. Сообщения'
+                                         '\n  2.3. Подписки'
+                                         '\n  2.4. Чат-бот ВК '
+                                         '\n  2.5 .Пригласить друзей '
+                                         '\n  2.6. Профиль'
+                                         '\n3. Подождать ответа менеджера'
+                                         '\n4. Возможные действия - меню'
+                                         '\n  4.1. Краткое меню'
+                                         '\n  4.2. Полное меню'
+                                         '\n5. Выход - стоп\n\n\n\n\n\n\n',
+                                 random_id=random.randint(0, 2 ** 64))
+            elif ('4' in text) or ('4.1' in text) or ('меню' in text):
+                vk.messages.send(user_id=event.obj.message['from_id'],
+                                 message='Что вас интересует:\n1. Регистрация'
+                                         '\n2. Возможности социальной сети\n'
+                                         '3. Подождать ответа менеджера\n'
+                                         '4. Возможные действия - меню\n'
+                                         '4.2. Полное меню\n'
                                          '5. Выйти - напишите "стоп"',
                                  random_id=random.randint(0, 2 ** 64))
-            elif ('стоп' in text) or ('4' in text):
+            elif ('стоп' in text) or ('5' in text) or ('выход' in text) or ('выйти' in text):
                 break
             else:
                 vk.messages.send(user_id=event.obj.message['from_id'],
@@ -170,7 +193,6 @@ def main():
     longpoll = VkBotLongPoll(vk_session, 174388874)
     m = 0
     vk = vk_session.get_api()
-
     for event in longpoll.listen():
         if event.type == VkBotEventType.MESSAGE_NEW:
             print(event)
@@ -202,6 +224,16 @@ def main():
                                          f'3. Подождать ответа менеджера',
                                  random_id=random.randint(0, 2 ** 64))
                 site(vk, longpoll)
+            elif 'имя' in text:
+                m = 0
+                vk.messages.send(user_id=event.obj.message['from_id'],
+                                 message="Как я могу к Вам обращаться?",
+                                 random_id=random.randint(0, 2 ** 64))
+            elif 'заново' in text:
+                m = -1
+                vk.messages.send(user_id=event.obj.message['from_id'],
+                                 message="Хорошо, начнем же все с чистого листа!",
+                                 random_id=random.randint(0, 2 ** 64))
 
 
             elif '' in text:
