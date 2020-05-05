@@ -310,13 +310,11 @@ def main():
                                          f'нужна помощь в фмшатской сети - пиши "Соц сеть",\n '
                                          f'изменить имя - "Другое имя"',
                                  random_id=random.randint(0, 2 ** 64))
-
             elif 'расписание' in text:
                 vk.messages.send(user_id=event.obj.message['from_id'],
                                  message=f'{name}, теперь вы в блоке расписание. Чтобы выйти, напишите "стоп", если хотите продолжить - "ок"',
                                  random_id=random.randint(0, 2 ** 64))
                 timet(vk, longpoll, vk_session)
-
             elif 'соц' in text:
                 vk.messages.send(user_id=event.obj.message['from_id'],
                                  message=f'Теперь {name} в блоке социальной сети ФМШ. Чтобы выйти, напишите "стоп". '
@@ -324,19 +322,16 @@ def main():
                                          f'3. Подождать ответа менеджера',
                                  random_id=random.randint(0, 2 ** 64))
                 site(vk, longpoll)
-
             elif 'имя' in text:
                 m = 0
                 vk.messages.send(user_id=event.obj.message['from_id'],
                                  message="Как я могу к Вам обращаться?",
                                  random_id=random.randint(0, 2 ** 64))
-
             elif 'заново' in text:
                 m = -1
                 vk.messages.send(user_id=event.obj.message['from_id'],
                                  message="Хорошо, начнем же все с чистого листа!",
                                  random_id=random.randint(0, 2 ** 64))
-
             elif 'меню' in text:
                 vk.messages.send(user_id=event.obj.message['from_id'],
                                  message='Вот, что я могу:'
@@ -348,13 +343,11 @@ def main():
                                          '\nИзменить имя'
                                          '\nНачать разговор заново',
                                  random_id=random.randint(0, 2 ** 64))
-
             elif ('болтать' in text) or ('говор' in text):
                 vk.messages.send(user_id=event.obj.message['from_id'],
                                  message='Давайте пообщаемся! Расскажите о себе. Кто вы?',
                                  random_id=random.randint(0, 2 ** 64))
                 talk(vk, longpoll, name, vk_session)
-
             else:
                 vk.messages.send(user_id=event.obj.message['from_id'],
                                  message=f'{name}, я не понял... Заново, пожалуйста.',
