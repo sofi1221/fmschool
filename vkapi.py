@@ -52,6 +52,7 @@ def site(vk, longpoll):
                                          ' почты ФМШ, фамилию, имя, телефон и придумать пароль, также можно ввести '
                                          'информацию в поле "О себе"',
                                  random_id=random.randint(0, 2 ** 64))
+
             elif ('1.2' in text) or ('зарегистрир' in text):
                 vk.messages.send(user_id=event.obj.message['from_id'],
                                  message='Для регистрации необходимо указать адрес электронной почты ФМШ вида '
@@ -63,6 +64,7 @@ def site(vk, longpoll):
                                          'корректность.\nПосле нажатия кнопки "Зарегистрироваться", вы сможете '
                                          'использовать все возможности социальной сети!',
                                  random_id=random.randint(0, 2 ** 64))
+
             elif ('2.1' in text) or ('новости' in text):
                 vk.messages.send(user_id=event.obj.message['from_id'],
                                  message='В этой социальной сети реализован новостной канал. Чтобы чем-то поделиться, '
@@ -78,6 +80,7 @@ def site(vk, longpoll):
                                          'возможность смотреть не только свои, но и новости тех, на кого подписаны. '
                                          'Всегда хорошо получать обратную связь - для этого есть лайки❤',
                                  random_id=random.randint(0, 2 ** 64))
+
             elif ('2.2' in text) or ('сообщения' in text):
                 vk.messages.send(user_id=event.obj.message['from_id'],
                                  message='Вкладка "Сообщения" в левом меню откроет замечательный способ связи с '
@@ -98,6 +101,7 @@ def site(vk, longpoll):
                                          'исчезает. Если же сообщение не прочитано тем, кому вы его отправили - '
                                          'оно зеленое, прочитанное - серое.',
                                  random_id=random.randint(0, 2 ** 64))
+
             elif ('2.3' in text) or ('подписк' in text):
                 vk.messages.send(user_id=event.obj.message['from_id'],
                                  message='Много друзей? Подписывайтесь на всех нажтием кнопки "Подписаться" в профиле '
@@ -105,11 +109,13 @@ def site(vk, longpoll):
                                          'странице "Подписчики". Тут же можно отписаться или подписаться на '
                                          'пользователя или написать сообщение, нажав на кнопку "Написать". ',
                                  random_id=random.randint(0, 2 ** 64))
+
             elif ('2.4' in text) or ('чат-бот' in text):
                 vk.messages.send(user_id=event.obj.message['from_id'],
                                  message='Чат-бот ВКонтакте - это я, Иннокентий. Всегда готов прийти на помощь, '
                                          'подсказать при работе в социальной сети ФМШ и просто поболтать о жизни👋🏻',
                                  random_id=random.randint(0, 2 ** 64))
+
             elif ('2.5' in text) or ('пригла' in text):
                 vk.messages.send(user_id=event.obj.message['from_id'],
                                  message='По моему мнению, кнопка "Пригласить друзей" - волшебная. Она настолько '
@@ -119,6 +125,7 @@ def site(vk, longpoll):
                                          'Не переживайте, я уверен, скоро эта кнопка будет работать, а я объясню, как '
                                          'ей пользоваться!',
                                  random_id=random.randint(0, 2 ** 64))
+
             elif ('2.6' in text) or ('профиль' in text):
                 vk.messages.send(user_id=event.obj.message['from_id'],
                                  message='Перейти в свой профиль можно нажатием на свой ник в правом верхнем углу любой'
@@ -130,6 +137,7 @@ def site(vk, longpoll):
                                          'Можно увидеть информацию о нем, его новости. Так как чужие новости удалять '
                                          'нельзя, вы можете только просматривать и лайкать их.',
                                  random_id=random.randint(0, 2 ** 64))
+
             elif ('1.3' in text) or ('возможност' in text) or ('2' in text):
                 vk.messages.send(user_id=event.obj.message['from_id'],
                                  message='Как классно, что соц.сеть ФМШ интересна! Теперь можно узнать о ней все (или '
@@ -140,15 +148,18 @@ def site(vk, longpoll):
                                          '2.3. Подписки\n2.4. Чат-бот ВК \n2.5 .Пригласить друзей \n'
                                          '2.6. Профиль',
                                  random_id=random.randint(0, 2 ** 64))
+
             elif ('1' in text) or ('регистрация' in text):
                 vk.messages.send(user_id=event.obj.message['from_id'],
                                  message='1.1. Условия регистрации\n1.2. Как зарегистрироваться\n1.3. Возможности '
                                          'социальной сети',
                                  random_id=random.randint(0, 2 ** 64))
+
             elif '3' in text:
                 vk.messages.send(user_id=event.obj.message['from_id'],
                                  message='Хорошо, скоро наш менеджер свяжется с вами',
                                  random_id=random.randint(0, 2 ** 64))
+
             elif ('полное меню' in text) or ('4.2' in text):
                 vk.messages.send(user_id=event.obj.message['from_id'],
                                  message='Вот, в чем я могу помочь относительно социальной сети ФМШ:'
@@ -169,6 +180,7 @@ def site(vk, longpoll):
                                          '\n  4.2. Полное меню'
                                          '\n5. Выход - стоп\n\n\n\n\n\n\n',
                                  random_id=random.randint(0, 2 ** 64))
+
             elif ('4' in text) or ('4.1' in text) or ('меню' in text):
                 vk.messages.send(user_id=event.obj.message['from_id'],
                                  message='Что вас интересует:\n1. Регистрация'
@@ -178,6 +190,7 @@ def site(vk, longpoll):
                                          '4.2. Полное меню\n'
                                          '5. Выйти - напишите "стоп"',
                                  random_id=random.randint(0, 2 ** 64))
+
             elif ('стоп' in text) or ('5' in text) or ('выход' in text) or ('выйти' in text):
                 break
             else:
@@ -185,6 +198,7 @@ def site(vk, longpoll):
                                  message='Я не понял... Повторите, пожалуйста.\nЧтобы выбрать действие, напишите '
                                          '"меню"',
                                  random_id=random.randint(0, 2 ** 64))
+
 
 def upload_mem(vk_session, event, dict, x):
     upload = vk_api.VkUpload(vk_session)
@@ -202,63 +216,74 @@ def talk(vk, longpoll, name, vk_session):
            '👍🏻', '🙏🏻', '🤘']
     no = ['Ваша правда, соглашаться нужно не всегда!', 'Всякое бывает', 'Лучше горькая правда, чем сладкая лесть',
           'Я полностью с тобой согласен', '🤔', '😲']
+
     for event in longpoll.listen():
         if event.type == VkBotEventType.MESSAGE_NEW:
             text = event.obj.message['text'].lower()
+
+
             if ('да' in text) or ('yes' in text):
                 vk.messages.send(user_id=event.obj.message['from_id'],
-                                 message=yes[random.randint(0, 8)],
+                                 message=yes[random.randint(0, 6)],
                                  random_id=random.randint(0, 2 ** 64))
             elif ('нет' in text) or ('no' in text):
                 vk.messages.send(user_id=event.obj.message['from_id'],
-                                 message=no[random.randint(0, 7)],
+                                 message=no[random.randint(0, 6)],
                                  random_id=random.randint(0, 2 ** 64))
+
+
             if ('выйти' in text) or ('стоп' in text):
                 vk.messages.send(user_id=event.obj.message['from_id'],
                                  message=f"Было приятно с Вами пообщаться! До встречи, {name}",
                                  random_id=random.randint(0, 2 ** 64))
+
             elif n == 0:
                 vk.messages.send(user_id=event.obj.message['from_id'],
                                  message=f"Это прекрано, {name}! А я - чат-бот, и мне это ужасно нравится! А Вы любите "
                                          "то, что делаете?",
                                  random_id=random.randint(0, 2 ** 64))
+
             elif (n == 1) or ('мем' in text):
                 vk.messages.send(user_id=event.obj.message['from_id'],
-                             message='Возможно, Вы захотите посмеяться? Доказано, что смех продлевает жизнь!\n'
-                                     'Недавно в Яндекс.Лицее проходил конкурс на лучший мем, ребята присылали '
-                                     'столько смешных шуток😂 Показать Вам парочку? (да/нет)',
-                             random_id=random.randint(0, 2 ** 64))
+                                 message='Возможно, Вы захотите посмеяться? Доказано, что смех продлевает жизнь!\n'
+                                         'Недавно в Яндекс.Лицее проходил конкурс на лучший мем, ребята присылали '
+                                         'столько смешных шуток😂 Показать Вам парочку? (да/нет)',
+                                 random_id=random.randint(0, 2 ** 64))
+
             elif (n == 2) and ('да' in text):
+                upload_mem(vk_session, event, 'yand_mem', 27)
                 vk.messages.send(user_id=event.obj.message['from_id'],
                                  message='Чтобы посмотреть еще мемов, напишите: "еще"',
                                  random_id=random.randint(0, 2 ** 64))
-                upload_mem(vk_session, event, 'yand_mem')
                 n -= 1
-            elif (n==2) and (('еще' in text) or ('ещё' in text)):
+
+            elif (n == 2) and (('еще' in text) or ('ещё' in text)):
                 upload_mem(vk_session, event, 'yand_mem', 27)
                 n -= 1
+
             elif n == 2:
                 vk.messages.send(user_id=event.obj.message['from_id'],
                                  message=f'Еще у меня есть подборка смешных картинок. {name}, посмотрите?(да/нет)',
                                  random_id=random.randint(0, 2 ** 64))
-                upload_mem(vk_session, event, 'yand_mem')
-            elif (n==3) and ('да' in text):
+                upload_mem(vk_session, event, 'yand_mem', 27)
+
+            elif (n == 3) and ('да' in text):
+                upload_mem(vk_session, event, 'else_mem', 40)
                 vk.messages.send(user_id=event.obj.message['from_id'],
                                  message='Чтобы посмотреть еще мемов, напишите: "еще"',
                                  random_id=random.randint(0, 2 ** 64))
-                upload_mem(vk_session, event, 'else_mem')
                 n -= 1
-            elif (n==3) and (('еще' in text) or ('ещё' in text)):
+
+            elif (n == 3) and (('еще' in text) or ('ещё' in text)):
                 upload_mem(vk_session, event, 'else_mem', 40)
                 n -= 1
+
             else:
                 vk.messages.send(user_id=event.obj.message['from_id'],
                                  message=f'Было приятно с Вами пообщаться! До встречи, {name}!',
                                  random_id=random.randint(0, 2 ** 64))
                 break
-
-
-
+            n += 1
 
 
 def main():
@@ -285,11 +310,13 @@ def main():
                                          f'нужна помощь в фмшатской сети - пиши "Соц сеть",\n '
                                          f'изменить имя - "Другое имя"',
                                  random_id=random.randint(0, 2 ** 64))
+
             elif 'расписание' in text:
                 vk.messages.send(user_id=event.obj.message['from_id'],
                                  message=f'{name}, теперь вы в блоке расписание. Чтобы выйти, напишите "стоп", если хотите продолжить - "ок"',
                                  random_id=random.randint(0, 2 ** 64))
                 timet(vk, longpoll, vk_session)
+
             elif 'соц' in text:
                 vk.messages.send(user_id=event.obj.message['from_id'],
                                  message=f'Теперь {name} в блоке социальной сети ФМШ. Чтобы выйти, напишите "стоп". '
@@ -297,16 +324,19 @@ def main():
                                          f'3. Подождать ответа менеджера',
                                  random_id=random.randint(0, 2 ** 64))
                 site(vk, longpoll)
+
             elif 'имя' in text:
                 m = 0
                 vk.messages.send(user_id=event.obj.message['from_id'],
                                  message="Как я могу к Вам обращаться?",
                                  random_id=random.randint(0, 2 ** 64))
+
             elif 'заново' in text:
                 m = -1
                 vk.messages.send(user_id=event.obj.message['from_id'],
                                  message="Хорошо, начнем же все с чистого листа!",
                                  random_id=random.randint(0, 2 ** 64))
+
             elif 'меню' in text:
                 vk.messages.send(user_id=event.obj.message['from_id'],
                                  message='Вот, что я могу:'
@@ -324,6 +354,7 @@ def main():
                                  message='Давайте пообщаемся! Расскажите о себе. Кто вы?',
                                  random_id=random.randint(0, 2 ** 64))
                 talk(vk, longpoll, name, vk_session)
+
             else:
                 vk.messages.send(user_id=event.obj.message['from_id'],
                                  message=f'{name}, я не понял... Заново, пожалуйста.',
