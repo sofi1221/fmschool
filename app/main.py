@@ -10,6 +10,7 @@ from app.data import db_session
 from app.data.users import User, RegisterForm, LoginForm, InfoForm, News, AddNews, Messages, \
     SendMessage, Groups
 
+
 app = Flask(__name__)
 app.config['SECRET_KEY'] = 'yandexlyceum_secret_key'
 
