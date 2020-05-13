@@ -3,7 +3,6 @@ from flask_login import LoginManager, login_user, login_required, logout_user
 from werkzeug.exceptions import abort
 from werkzeug.utils import redirect
 from flask import render_template, Flask, request
-import users_api
 import base64
 from flask_login import current_user
 from datetime import datetime
