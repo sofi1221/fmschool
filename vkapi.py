@@ -14,8 +14,8 @@ def upload_photo(vk_session, event, x):
                          random_id=random.randint(0, 2 ** 64))
 def timet(vk, longpoll, vk_session):
     for event in longpoll.listen():
-        text = event.obj.message['text'].lower()
         if event.type == VkBotEventType.MESSAGE_NEW:
+            text = event.obj.message['text'].lower()
             if 'стоп' in text:
                 break
             if ('понедельник' in text) or ('пн' in text):
@@ -40,8 +40,8 @@ def timet(vk, longpoll, vk_session):
 
 def site(vk, longpoll):
     for event in longpoll.listen():
-        text = event.obj.message['text'].lower()
         if event.type == VkBotEventType.MESSAGE_NEW:
+            text = event.obj.message['text'].lower()
             if ('1.1' in text) or ('условия' in text):
                 vk.messages.send(user_id=event.obj.message['from_id'],
                                  message='Стать участниками социальной сети ФМШ могут все обладатели корпоративной '
