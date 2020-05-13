@@ -355,5 +355,5 @@ def apivk():
             m += 1
 
 
-if __name__ == '__vk__':
+if __name__ == '__main__':
     apivk()
