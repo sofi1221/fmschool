@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Add news</title>
+    <link rel="icon"
+          href="https://drive.google.com/file/d/18HueSVnOTwTXBYDJlqeZgHCFTfZJjAYx/view?usp=sharing"
+          type="image/png">
+
+    <style type="text/css">
+        .form {
+            background: rgba(87, 87, 87, 0.8);;
+            color: #eeeeee;
+            border-radius: 10px;
+            padding: 15px; /* Значения отступов */
+            margin: 15px;
+        }
+
+    </style>
+</head>
+<body>
+{% extends "base.html" %}
+
+{% block content %}
+<h1 align="center">Add news</h1>
+<div class="form">
+    <form action="" method="post">
+        {{ form.hidden_tag() }}
+        {{ form.csrf_token }}
+
+        <p>
+            {{ form.text.textarea }}<br>
+            {{ form.text(autocomplete="off", class="form-control") }}<br>
+            {% for error in form.text.errors %}
+        <p class="alert alert-danger" role="alert">
+            {{ error }}
+        </p>
+        {% endfor %}
+        </p>
+        <p>
+            {{ form.img_url.label }}<br>
+            {{ form.img_url(autocomplete="off", class="form-control") }}<br>
+            {% for error in form.img_url.errors %}
+        <p class="alert alert-danger" role="alert">
+            {{ error }}
+        </p>
+        {% endfor %}
+        </p>
+
+        <p>{{ form.submit(type="submit", class="btn btn-outline-light") }}</p>
+        {{message}}
+    </form>
+</div>
+{% endblock %}
+</body>
+</html>
