@@ -1,14 +1,12 @@
-import flask
 from flask_login import LoginManager, login_user, login_required, logout_user
 from werkzeug.exceptions import abort
 from werkzeug.utils import redirect
 from flask import render_template, Flask, request
-import base64
 from flask_login import current_user
 from datetime import datetime
 
-from WEB.data import db_session
-from WEB.data.users import User, RegisterForm, LoginForm, InfoForm, News, AddNews, Messages, \
+from WEB.WEB.data import db_session
+from WEB.WEB.data.users import User, RegisterForm, LoginForm, InfoForm, News, AddNews, Messages, \
     SendMessage, Groups
 
 app = Flask(__name__)
