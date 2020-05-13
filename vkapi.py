@@ -6,14 +6,12 @@ import random
 def upload_photo(vk_session, event, x):
     upload = vk_api.VkUpload(vk_session)
     for i in range(1, 3):
-        photo = upload.photo_messages([f'timetable\{x}{i}.jpg'])
+        photo = upload.photo_messages([f'timetable/{x}{i}.jpg'])
         vk_photo_id = f"photo{photo[0]['owner_id']}_{photo[0]['id']}"
         vk = vk_session.get_api()
         vk.messages.send(user_id=event.obj.message['from_id'],
                          attachment=vk_photo_id, message='',
                          random_id=random.randint(0, 2 ** 64))
-
-
 def timet(vk, longpoll, vk_session):
     for event in longpoll.listen():
         text = event.obj.message['text'].lower()
@@ -202,7 +200,7 @@ def site(vk, longpoll):
 
 def upload_mem(vk_session, event, dict, x):
     upload = vk_api.VkUpload(vk_session)
-    photo = upload.photo_messages([f'{dict}\{random.randint(1, x)}.jpg'])
+    photo = upload.photo_messages([f'{dict}/{random.randint(1, x)}.jpg'])
     vk_photo_id = f"photo{photo[0]['owner_id']}_{photo[0]['id']}"
     vk = vk_session.get_api()
     vk.messages.send(user_id=event.obj.message['from_id'],
@@ -288,8 +286,9 @@ def talk(vk, longpoll, name, vk_session):
 
 def apivk():
     vk_session = vk_api.VkApi(
-        token='1fcd036663cf0104cf09ecce90a3f5730755ba1d554a4e6b1aa3fd89c1117441a4961e7bd7cda4de441c7')
-    longpoll = VkBotLongPoll(vk_session, 174388874)
+        token='c74a7df31799b3d42f6083c76511b2a543032'
+              '11b1b61087aa456bb6cb997a7633214c1fa1b4faf1371466')
+    longpoll = VkBotLongPoll(vk_session, 193513111)
     m = 0
     vk = vk_session.get_api()
     for event in longpoll.listen():
@@ -355,5 +354,5 @@ def apivk():
             m += 1
 
 
-if __name__ == '__vk__':
+if __name__ == '__main__':
     apivk()
